@@ -1,0 +1,73 @@
+import { twMerge } from "tailwind-merge";
+import { sanitizeText, getMonthName } from "@erikmuir/dol-lib/common/utils";
+import { ItemCountPill } from "@/components/common/ItemCountPill";
+import { DateShowCount, DateType } from "./types";
+
+export type DateProps = {
+  name: string;
+  targets: DateShowCount[];
+  dateType: DateType;
+  jumpTo: (name: string, value: string) => void;
+};
+
+export const getEraText = (era: string): string => {
+  switch (era) {
+    case "1.0":
+      return "1983 - 2000";
+    case "2.0":
+      return "2001 - 2004";
+    case "3.0":
+      return "2008 - 2020";
+    case "4.0":
+      return "2021 - present";
+    default:
+      return era;
+  }
+};
+
+export const Date = ({
+  name,
+  targets,
+  dateType,
+  jumpTo,
+}: DateProps): React.ReactElement => {
+  return (
+    <div className="w-80 mx-auto flex flex-col items-center justify-center">
+      <div className="text-2xl text-dol-yellow pb-4 text-center">
+        {sanitizeText(name)}
+      </div>
+      {targets.map(([target, showCount], index: number) => {
+        const targetText = dateType === "month" ? getMonthName(target) : target;
+        return (
+          <div
+            key={target}
+            onClick={() => jumpTo(dateType, target)}
+            className={twMerge(
+              "py-1 px-2 w-full",
+              "cursor-pointer hover:bg-gray-dark",
+              "border-t border-gray-dark last:border-b",
+              "flex items-center justify-between"
+            )}
+          >
+            <div className="flex items-center gap-4">
+              <div className="">{sanitizeText(targetText)}</div>
+              {dateType === "era" && (
+                <div className="text-xs text-gray-medium">
+                  {getEraText(target)}
+                </div>
+              )}
+            </div>
+            <div className="">
+              <ItemCountPill
+                item="show"
+                count={showCount}
+                twSize="xs"
+                seed={index}
+              />
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+};

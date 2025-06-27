@@ -1,0 +1,16 @@
+{
+  "name": "Duke of Lizards",
+  "short_name": "DoL",
+  "description": "A Phish-themed Web3 dApp built on Hedera",
+  "icons": [
+    {
+      "src": "favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#ac000f",
+  "background_color": "#222222"
+}
