@@ -1,6 +1,7 @@
 # Duke of Lizards Web
 
 ### Animals/Subjects:
+
 - [x] Lizard
 - [x] Mockingbird
 - [x] Llama
@@ -19,3 +20,5 @@
 - [] Ocelot
 - [] Cluster Fly
 - [] Fish
+
+_trigger a deploy on vercel_

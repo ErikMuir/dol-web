@@ -92,15 +92,15 @@ export class ViewModel {
   private mapCountryStates = (showsByVenue: ShowsVenueDict): CountryStates => {
     const countryStates: CountryStates = {};
     for (const venue of Object.keys(showsByVenue)) {
-      let { city, state, country } = showsByVenue[venue][0];
-      state ??= "";
-      state = getStateName(state);
+      const firstShow = showsByVenue[venue][0];
+      const { city, state, country } = firstShow;
+      const stateName = getStateName(state);
       if (!countryStates[country]) countryStates[country] = {};
-      if (!countryStates[country][`${state}`])
-        countryStates[country][`${state}`] = {};
-      if (!countryStates[country][`${state}`][city])
-        countryStates[country][`${state}`][city] = {};
-      countryStates[country][`${state}`][city][venue] = showsByVenue[venue];
+      if (!countryStates[country][`${stateName}`])
+        countryStates[country][`${stateName}`] = {};
+      if (!countryStates[country][`${stateName}`][city])
+        countryStates[country][`${stateName}`][city] = {};
+      countryStates[country][`${stateName}`][city][venue] = showsByVenue[venue];
     }
     return countryStates;
   };
