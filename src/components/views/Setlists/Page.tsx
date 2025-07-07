@@ -149,10 +149,7 @@ export const Page = (): React.ReactNode => {
         : undefined;
     }
 
-    // Runbook for when nft metadata fails to update:
-    // 1. with the app running locally, navigate to the performance in question
-    // 2. open the console, uncomment the line below, then refresh the page
-    // 3. use the output to populate the update-metadata.js script in dol-bot
+    // Used for runbook: When NFT metadata fails to update
     //-------------------------------------------------------------------------
     // console.log("Setting attributes:", newAttributes);
     //-------------------------------------------------------------------------
@@ -443,7 +440,7 @@ export const Page = (): React.ReactNode => {
         onClick={handleMintClick}
         disabled={disabled}
       >
-        Mint for {hfbHbarPrice} ℏ
+        Mint for {hfbHbarPrice} <em>ℏ</em>
       </button>
     );
   };
