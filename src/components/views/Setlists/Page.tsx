@@ -440,7 +440,7 @@ export const Page = (): React.ReactNode => {
         onClick={handleMintClick}
         disabled={disabled}
       >
-        Mint for {hfbHbarPrice} <em>ℏ</em>
+        Mint: {hfbHbarPrice} ℏ
       </button>
     );
   };
