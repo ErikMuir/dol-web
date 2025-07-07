@@ -423,6 +423,13 @@ export const Page = (): React.ReactNode => {
         </button>
       );
     }
+    if (!mintEnabled) {
+      return (
+        <button type="button" className={buttonGray} disabled>
+          Public Mint: TBA
+        </button>
+      );
+    }
     const disabled =
       !mintEnabled ||
       !Boolean(performance) ||
