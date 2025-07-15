@@ -11,7 +11,9 @@ export const Header = () => {
         className="flex items-center gap-2 cursor-default"
         title="Can you still have fun?"
       >
-        <Shapes sizeInPixels={20} bounceOnHover />
+        <a href="https://wilson.com">
+          <Shapes sizeInPixels={20} bounceOnHover />
+        </a>
       </div>
       <div className="pr-2 flex items-center gap-2">
         <DiscordLink sizeInPixels={24} />

@@ -35,7 +35,7 @@ import {
   ImageAttributes,
   SectionHeader,
   StaticAttributes,
-} from "@/components/views/Setlists/Attributes";
+} from "@/components/views/Shows/Attributes";
 import { openWalletConnectModal } from "@/wallet";
 import {
   useIsTokenAssociated,
@@ -52,7 +52,7 @@ import { fetchStandardJson } from "@/utils";
 
 const { hfbCollectionId, mintEnabled, hfbHbarPrice } = getDappConfig();
 
-export const Page = (): React.ReactNode => {
+export const Performance = (): React.ReactNode => {
   const pathname = usePathname();
   const pathParts = pathname.split("/");
   const date = pathParts.at(-2) ?? "";

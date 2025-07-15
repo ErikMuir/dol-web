@@ -21,7 +21,7 @@ export const ShowsForMonth = ({
         return (
           <Link
             key={show.id}
-            href={`/setlists/${show.showDate}`}
+            href={`/shows/${show.showDate}`}
             className="hover:bg-gray-dark-2 rounded border border-gray-dark w-full"
           >
             <div className="flex items-center gap-4">

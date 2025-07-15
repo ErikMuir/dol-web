@@ -55,15 +55,15 @@ export const Shapes = ({
           color={DolColorHex.Green}
           className={twMerge(bounceOnHover ? "group-hover:animate-bounce" : "")}
         />
-        <Circle
-          sizeInPixels={sizeInPixels}
-          color={DolColorHex.Red}
-          className=""
-        />
         <Square
           sizeInPixels={sizeInPixels}
           color={DolColorHex.Yellow}
           className={twMerge(bounceOnHover ? "group-hover:animate-bounce" : "")}
+        />
+        <Circle
+          sizeInPixels={sizeInPixels}
+          color={DolColorHex.Red}
+          className=""
         />
       </div>
     </div>

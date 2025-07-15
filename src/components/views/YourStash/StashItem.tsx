@@ -97,7 +97,7 @@ export const StashItem = ({
   const { date, position } = attributes;
   const href =
     date && position
-      ? `/setlists/${attributes.date}/${attributes.position}`
+      ? `/shows/${attributes.date}/${attributes.position}`
       : "#";
 
   return (

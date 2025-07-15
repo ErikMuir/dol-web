@@ -1,35 +1,51 @@
 # Duke of Lizards Web
 
-## Runbooks
+## UI Routes
 
-### When NFT metadata fails to update
+- `/` - Home
+- `/helping-friendly-book/dates` - Browse Shows by Date
+- `/helping-friendly-book/locations` - Browse Shows by Location
+- `/shows/[date]` - Show
+- `/shows/[date]/[position]` - Performance
+- `/stash` - Your Stash
+- `/logs` - Duke's Log
+- `/privacy-policy` - Privacy Policy
+- `/terms-of-service` - Terms of Service
 
-1. In an IDE, open `src/components/views/Setlists/Page.tsx`
-2. Uncomment this line (~154): `console.log("Setting attributes:", newAttributes);`
-3. Run the app locally: `npm run dev`
-4. Open the dev tools console: `<F12>`
-5. Navigate to the performance in question: `https://localhost:3000/setlists/{yyyy-mm-dd}/{position}`
-6. Use the console output to populate the `update-metadata.js` script in `dol-bot`
+## API Routes
 
-## Misc
+- `/api/audit/[accountId]` - POST
+- `/api/audit-logs/[key]` - GET
+- `/api/mint/[accountId]/[showDate]/[position]` - POST
+- `/api/mint/[accountId]/[showDate]/[position]/[serial]` - POST
+- `/api/mint/[accountId]/[showDate]/[position]/[serial]/abort` - POST
+- `/api/mirror/accounts/[accountId]/nfts/[tokenId]` - GET
+- `/api/mirror/accounts/[accountId]/tokens/[tokenId]` - GET
+- `/api/mirror/tokens/[tokenId]/nfts/[serial]` - GET
+- `/api/performances/[showDate]` - GET
+- `/api/performances/[showDate]/[position]` - GET
+- `/api/reviews/[date]` - GET
+- `/api/setlists/[date]` - GET
+- `/api/setlists/[date]/[position]` - GET
+- `/api/shows` - GET
+- `/api/shows/[date]` - GET
+- `/api/songs/[songId]` - GET
+- `/api/tracks/[date]/[position]` - GET
 
-### Animals/Subjects:
+## Public Routes
 
-- [x] Lizard
-- [x] Mockingbird
-- [x] Llama
-- [x] Sloth
-- [x] Multibeast
-- [x] Harpua
-- [x] PosterNutbag
-- [] Vulture
-- [] Wombat
-- [] Guyute (pig)
-- [] Goldfish
-- [] Mule
-- [] Possum
-- [] Camel
-- [] Antelope
-- [] Ocelot
-- [] Cluster Fly
-- [] Fish
+- `/public/avatar.png`
+- `/public/dol-preview.png`
+- `/public/favicon.ico`
+- `/public/hedera-logo.png`
+- `/public/logo.png`
+- `/public/manifest.json`
+- `/public/robotjones.jpg`
+- `/public/subjects/famous-mockingbird.png`
+- `/public/subjects/harpua.png`
+- `/public/subjects/helping-friendly-book.png`
+- `/public/subjects/lizard.png`
+- `/public/subjects/llama.png`
+- `/public/subjects/multibeast.png`
+- `/public/subjects/poster-nutbag.png`
+- `/public/subjects/sloth.png`

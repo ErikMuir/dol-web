@@ -21,7 +21,7 @@ export const DynamicAttributes = ({
       <DataAttribute
         label="Last Played"
         data={song?.lastPlayed}
-        href={`/setlists/${song?.lastPlayed}`}
+        href={`/shows/${song?.lastPlayed}`}
         loading={songLoading}
         attributeColor={"dol-green"}
       />

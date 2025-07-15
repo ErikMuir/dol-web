@@ -21,7 +21,7 @@ export const Nav = (): React.ReactElement => {
         isFaulty
         isCurrentTab={
           pathname.startsWith("/helping-friendly-book") ||
-          pathname.startsWith("/setlists")
+          pathname.startsWith("/shows")
         }
       />
       <NavTab

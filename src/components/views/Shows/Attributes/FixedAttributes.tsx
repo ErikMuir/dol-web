@@ -1,6 +1,7 @@
 import { PerformanceAttributes, Song } from "@erikmuir/dol-lib/types";
 import { AudioAttribute } from "../AttributeTypes/AudioAttribute";
 import { DataAttribute } from "../AttributeTypes/DataAttribute";
+import { TextAttribute } from "../AttributeTypes";
 
 export type FixedAttributesProps = {
   attributes: PerformanceAttributes;
@@ -18,6 +19,29 @@ export const FixedAttributes = ({
   setlistsLoading,
   songLoading,
 }: FixedAttributesProps): React.ReactNode => {
+
+  const getFootnoteAttribute = () => {
+    const footnoteText = attributes.footnote;
+    const hasLongFootnote = footnoteText && footnoteText.length > 32;
+    return hasLongFootnote ? (
+      <TextAttribute
+        label="Footnote"
+        text={footnoteText}
+        loading={setlistLoading}
+        attributeColor={"dol-blue"}
+        fullWidth
+        textCentered
+      />
+    ) : (
+      <DataAttribute
+        label="Footnote"
+        data={footnoteText}
+        loading={setlistLoading}
+        attributeColor={"dol-blue"}
+      />
+    );
+  };
+
   return (
     <div className="flex flex-wrap justify-center gap-2 items-center w-full max-w-[640px] mx-auto">
       <AudioAttribute
@@ -42,7 +66,7 @@ export const FixedAttributes = ({
       <DataAttribute
         label="Date"
         data={attributes.date}
-        href={`/setlists/${attributes.date}`}
+        href={`/shows/${attributes.date}`}
         loading={setlistLoading}
         attributeColor={"dol-blue"}
       />
@@ -127,16 +151,11 @@ export const FixedAttributes = ({
       <DataAttribute
         label="Debut"
         data={attributes.debut}
-        href={`/setlists/${attributes.debut}`}
+        href={`/shows/${attributes.debut}`}
         loading={songLoading}
         attributeColor={"dol-blue"}
       />
-      <DataAttribute
-        label="Footnote"
-        data={attributes.footnote}
-        loading={setlistLoading}
-        attributeColor={"dol-blue"}
-      />
+      {getFootnoteAttribute()}
     </div>
   );
 };

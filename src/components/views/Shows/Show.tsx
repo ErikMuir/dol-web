@@ -112,7 +112,7 @@ export const Show = (): React.ReactElement => {
 
   const getSongRow = (setlist: Setlist) => {
     const { id, showDate, position } = setlist;
-    const href = `/setlists/${showDate}/${position}`;
+    const href = `/shows/${showDate}/${position}`;
     return (
       <div
         key={id}
