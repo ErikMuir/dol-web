@@ -16,7 +16,7 @@ export async function GET(
     if (!date || isNaN(Date.parse(date))) {
       throw new Error(`Invalid date: ${date}`);
     }
-    const allSetlists = (await getSetlistsByShowDate(date)) || [];
+    const allSetlists = (await getSetlistsByShowDate(date, {}, true)) || [];
     const filteredSetlists = allSetlists.filter((setlist) =>
       artistId ? setlist.artistId === artistId : true
     );
