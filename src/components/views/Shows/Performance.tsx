@@ -26,6 +26,7 @@ import {
   donutColors,
   getRandomAttribute,
   subjects,
+  getSetText,
 } from "@erikmuir/dol-lib/common/dapp";
 import { Loading } from "@/components/common/Loading";
 import {
@@ -106,7 +107,7 @@ export const Performance = (): React.ReactNode => {
       newAttributes.performanceId = `${normalizedDate}:${setlist.position}`;
       newAttributes.song = setlist.song;
       newAttributes.date = setlist.showDate;
-      newAttributes.set = setlist.set;
+      newAttributes.set = getSetText(setlist.set);
       newAttributes.position = setlist.position;
       newAttributes.venue = setlist.venue;
       newAttributes.city = setlist.city;
