@@ -21,7 +21,9 @@ export async function GET(
     }
     const show = await getShowByDate(date);
     if (show && show.tracks && show.tracks.length > 0) {
-      track = show.tracks.find((t) => t.position === parsedPosition);
+      const soundchecks = show.tracks.filter((t) => t.setName === "Soundcheck").length;
+      const adjustedPosition = parsedPosition - soundchecks;
+      track = show.tracks.find((t) => t.position === adjustedPosition);
     }
   } catch (e: any) {
     console.error(e);

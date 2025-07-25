@@ -58,6 +58,7 @@ export const Performance = (): React.ReactNode => {
   const pathParts = pathname.split("/");
   const date = pathParts.at(-2) ?? "";
   const position = pathParts.at(-1) ?? "";
+  const parsedPosition = parseInt(position, 10);
 
   const [songId, setSongId] = useState<number>();
   const [bgColor, setBgColor] = useState<DolColorHex>(DolColorHex.Dark);
@@ -71,10 +72,10 @@ export const Performance = (): React.ReactNode => {
   const { setlist, setlistLoading } = useSetlist(date, position);
   const { setlists, setlistsLoading } = useSetlists(date);
   const { song, songLoading } = useSong(songId);
-  const { track, trackLoading } = useTrack(date, position);
+  const { track, trackLoading } = useTrack(date, parsedPosition);
   const { performance, performanceLoading } = usePerformance(
     date,
-    parseInt(position)
+    parsedPosition
   );
   const { metadata, metadataLoading } = useNftMetadata(
     hfbCollectionId,
