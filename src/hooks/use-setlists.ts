@@ -14,7 +14,15 @@ export function useSetlists(date: string) {
 
 export function useSetlistsBySongId(songId: number | string) {
   const { data, isLoading, error } = useSWR<Setlist[]>(
-    `/api/songs/${songId}/setlists`,
+    `/api/setlists/${songId}`,
+    fetchStandardJson
+  );
+  return { setlists: data, setlistsLoading: isLoading, setlistsError: error };
+}
+
+export function useSetlistsBySongSlug(slug: number | string) {
+  const { data, isLoading, error } = useSWR<Setlist[]>(
+    `/api/setlists/${slug}`,
     fetchStandardJson
   );
   return { setlists: data, setlistsLoading: isLoading, setlistsError: error };

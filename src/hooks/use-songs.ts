@@ -19,3 +19,8 @@ export function useSong(songId?: number | string) {
 
   return { song: data, songLoading: isLoading, songError: error };
 }
+
+export function useSongs() {
+  const { data, isLoading, error } = useSWR<Song[]>('/api/songs', fetchStandardJson);
+  return { songs: data, songsLoading: isLoading, songsError: error };
+}
