@@ -1,7 +1,6 @@
 import { useRef } from "react";
 import { FaSearch } from "react-icons/fa";
 import { twMerge } from "tailwind-merge";
-import { Loading } from "./Loading";
 
 export type SearchBarProps = {
   value: string;

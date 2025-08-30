@@ -57,7 +57,7 @@ export const Songs = (): React.ReactElement => {
   };
 
   return (
-    <div className="w-96 mt-4 mx-auto flex flex-col">
+    <div className="w-80 mt-4 mx-auto flex flex-col">
       <SearchBar
         value={searchTerm}
         onChange={setSearchTerm}

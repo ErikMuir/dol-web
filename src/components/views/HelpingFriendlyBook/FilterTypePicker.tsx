@@ -21,12 +21,24 @@ export const FilterTypePicker = ({
   return (
     <div className="w-80 mx-auto rounded-full bg-gray-dark border border-gray-dark-2 flex items-center">
       <Link
-        href="/helping-friendly-book/dates"
+        href="/helping-friendly-book/songs"
         aria-disabled={disabled}
         tabIndex={disabled ? -1 : undefined}
         className={twMerge(
           baseOptionClassName,
           "rounded-l-full",
+          pathname.startsWith("/helping-friendly-book/songs") ? "bg-dol-blue" : "hover:bg-gray-dark-2",
+          disabled ? "pointer-events-none" : ""
+        )}
+      >
+        {FilterType.Song}
+      </Link>
+      <Link
+        href="/helping-friendly-book/dates"
+        aria-disabled={disabled}
+        tabIndex={disabled ? -1 : undefined}
+        className={twMerge(
+          baseOptionClassName,
           pathname.startsWith("/helping-friendly-book/dates") ? "bg-dol-blue" : "hover:bg-gray-dark-2",
           disabled ? "pointer-events-none" : ""
         )}
@@ -39,24 +51,12 @@ export const FilterTypePicker = ({
         tabIndex={disabled ? -1 : undefined}
         className={twMerge(
           baseOptionClassName,
+          "rounded-r-full",
           pathname.startsWith("/helping-friendly-book/locations") ? "bg-dol-blue" : "hover:bg-gray-dark-2",
           disabled ? "pointer-events-none" : ""
         )}
       >
         {FilterType.Location}
-      </Link>
-      <Link
-        href="/helping-friendly-book/songs"
-        aria-disabled={disabled}
-        tabIndex={disabled ? -1 : undefined}
-        className={twMerge(
-          baseOptionClassName,
-          "rounded-r-full",
-          pathname.startsWith("/helping-friendly-book/songs") ? "bg-dol-blue" : "hover:bg-gray-dark-2",
-          disabled ? "pointer-events-none" : ""
-        )}
-      >
-        {FilterType.Song}
       </Link>
     </div>
   );
