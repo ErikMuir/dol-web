@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { FaSearch } from "react-icons/fa";
 import { twMerge } from "tailwind-merge";
 
@@ -18,6 +18,12 @@ export const SearchBar = ({
   className,
 }: SearchBarProps): React.ReactElement => {
   const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [inputRef.current]);
 
   return (
     <div

@@ -1,42 +1,60 @@
 "use client";
 
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { twMerge } from "tailwind-merge";
 import Link from "next/link";
+import { MdArrowBack } from "react-icons/md";
 
 export const Nav = (): React.ReactElement => {
   const pathname = usePathname();
+  const router = useRouter();
   return (
-    <div className="flex justify-start items-center w-full gap-4">
-      <NavTab
-        name="Home"
-        href="/"
-        color="bg-dol-blue"
-        isCurrentTab={pathname === "/"}
-      />
-      <NavTab
-        name="Helping Friendly Book"
-        href="/helping-friendly-book/dates"
-        color="bg-dol-green"
-        isFaulty
-        isCurrentTab={
-          pathname.startsWith("/helping-friendly-book") ||
-          pathname.startsWith("/shows")
-        }
-      />
-      <NavTab
-        name="Your Stash"
-        href="/stash"
-        color="bg-dol-red"
-        isCurrentTab={pathname.startsWith("/stash")}
-      />
-      <NavTab
-        name="Duke's Log"
-        href="/logs"
-        color="bg-dol-yellow"
-        isCurrentTab={pathname.startsWith("/logs")}
-      />
+    <div className="w-full mx-auto max-w-[1024px]">
+      <div className="flex justify-start items-center gap-4">
+        <NavTab
+          name="Home"
+          href="/"
+          color="bg-dol-blue"
+          isCurrentTab={pathname === "/"}
+        />
+        <NavTab
+          name="Helping Friendly Book"
+          href="/helping-friendly-book/songs"
+          color="bg-dol-green"
+          isFaulty
+          isCurrentTab={
+            pathname.startsWith("/helping-friendly-book") ||
+            pathname.startsWith("/shows")
+          }
+        />
+        <NavTab
+          name="Your Stash"
+          href="/stash"
+          color="bg-dol-red"
+          isCurrentTab={pathname.startsWith("/stash")}
+        />
+        <NavTab
+          name="Duke's Log"
+          href="/logs"
+          color="bg-dol-yellow"
+          isCurrentTab={pathname.startsWith("/logs")}
+        />
+      </div>
+      <div className="relative top-5">
+        <MdArrowBack
+          size={40}
+          className={twMerge(
+            "p-2 z-30 shadow-md rounded-full cursor-pointer",
+            "bg-gray-dark",
+            "border border-gray-medium/25",
+            "hover:bg-gray-dark-2 duration-500"
+          )}
+          title="Go back"
+          onClick={() => router.back()}
+        />
+      </div>
     </div>
+    
   );
 };
 

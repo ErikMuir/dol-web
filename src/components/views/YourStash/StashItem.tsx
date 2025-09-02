@@ -20,7 +20,7 @@ import { Loading } from "@/components/common/Loading";
 export const AddToStashItem = (): React.ReactNode => {
   return (
     <Link
-      href="/helping-friendly-book/dates"
+      href="/helping-friendly-book/songs"
       className={twMerge(
         "flex items-center justify-center gap-4 w-[320px] py-4",
         "text-dol-white/50 hover:text-dol-white duration-500",

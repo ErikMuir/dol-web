@@ -16,10 +16,17 @@ export const FilterTypePicker = ({
   disabled,
 }: FilterTypePickerProps): React.ReactElement => {
   const pathname = usePathname();
-  const baseOptionClassName =
-    "py-1 w-1/3 text-center cursor-pointer transition duration-250 border-x border-gray-dark-2";
+  const baseOptionClassName = twMerge(
+    "py-1 w-1/3 text-center cursor-pointer",
+    "border border-gray-dark-2",
+    "transition duration-250"
+  );
   return (
-    <div className="w-80 mx-auto rounded-full bg-gray-dark border border-gray-dark-2 flex items-center">
+    <div className={twMerge(
+      "w-72 mx-auto",
+      "flex items-center",
+      "rounded-full bg-gray-dark shadow-lg",
+    )}>
       <Link
         href="/helping-friendly-book/songs"
         aria-disabled={disabled}

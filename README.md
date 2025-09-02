@@ -5,6 +5,8 @@
 - `/` - Home
 - `/helping-friendly-book/dates` - Browse Shows by Date
 - `/helping-friendly-book/locations` - Browse Shows by Location
+- `/helping-friendly-book/songs` - Browse Performances by Song
+- `/helping-friendly-book/songs/[slug]` - Song Performances
 - `/shows/[date]` - Show
 - `/shows/[date]/[position]` - Performance
 - `/stash` - Your Stash

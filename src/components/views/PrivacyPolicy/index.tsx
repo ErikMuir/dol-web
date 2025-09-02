@@ -1,30 +1,10 @@
-import { MdArrowBack } from "react-icons/md";
 import { Shapes } from "@/components/common/Shapes";
-import { twMerge } from "tailwind-merge";
-import { useRouter } from "next/navigation";
 
 export const PrivacyPolicy = (): React.ReactNode => {
-  const router = useRouter();
-  
   const divider = <div className="border-t border-gray-dark"></div>;
 
   return (
     <div className="flex flex-col items-center items-stretch gap-8 max-w-[680px] mt-8 px-4 text-lg text-justify">
-      <div className="relative">
-        <div className="absolute -left-6">
-          <MdArrowBack
-            size={40}
-            className={twMerge(
-              "mt-2 p-2 z-10 shadow-md rounded-full cursor-pointer",
-              "bg-gray-dark",
-              "hover:bg-gray-dark-2 duration-500"
-            )}
-            title="Go back"
-            onClick={() => router.back()}
-          />
-        </div>
-      </div>
-      
       <div className="pb-8">
         <div className="text-center text-4xl uppercase tracking-widest">
           Privacy Policy

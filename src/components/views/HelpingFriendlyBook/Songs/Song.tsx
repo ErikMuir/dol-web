@@ -24,23 +24,26 @@ export const Song = (): React.ReactElement => {
   const setlistItems = setlists.map((setlist, index) => {
     const { showDate, position, venue, city, state, country } = setlist;
     return (
-      <Link
+      <div
         key={index}
-        href={`/shows/${showDate}/${position}`}
         className={twMerge(
-          "flex flex-col p-2 w-full",
-          "border-b border-gray-dark",
-          index === 0 && "border-t",
-          "hover:bg-gray-dark duration-300",
-        )}
-      >
-        <div className="text-lg text-center text-balance">
-          {toFriendlyDate(showDate)}
-        </div>
-        <div className="text-sm text-center text-balance text-dol-yellow/75">
-          {venue}, {getVenueLocation(city, state, country)}
-        </div>
-      </Link>
+        "flex p-2 w-full border-b border-gray-dark",
+        index === 0 && "border-t",
+        "hover:bg-gray-dark duration-300",
+      )}>
+        <div className="text-xl min-w-[40px]">{index + 1}.</div>
+        <Link
+          href={`/shows/${showDate}/${position}`}
+          className="flex flex-col grow"
+        >
+          <div className="text-lg text-balance">
+            {toFriendlyDate(showDate)}
+          </div>
+          <div className="text-sm text-balance text-dol-yellow/75">
+            {venue}, {getVenueLocation(city, state, country)}
+          </div>
+        </Link>
+      </div>
     );
   });
 

@@ -7,12 +7,12 @@ import { StandardPayload, success } from "@/utils";
 
 export async function GET(
   _: NextRequest,
-  { params }: { params: Promise<{ date: string; position: string }> }
+  { params }: { params: Promise<{ dateOrSlug: string; position: string }> }
 ): Promise<NextResponse<StandardPayload<Setlist | string | undefined>>> {
   const artistId = 1; // only phish, for now
   let setlist: Setlist | undefined;
   try {
-    const { date, position } = await params;
+    const { dateOrSlug: date, position } = await params;
     if (!date || isNaN(Date.parse(date))) {
       throw new Error(`Invalid date: ${date}`);
     }

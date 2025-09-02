@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { twMerge } from "tailwind-merge";
 import { Song } from "@erikmuir/dol-lib/types";
+import { Loading } from "@/components/common/Loading";
 import { SearchBar } from "@/components/common/SearchBar";
 import { useSongs } from "@/hooks";
-import Link from "next/link";
-import { Loading } from "@/components/common/Loading";
 
 export const Songs = (): React.ReactElement => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -25,12 +25,12 @@ export const Songs = (): React.ReactElement => {
   }, [songs, searchTerm]);
 
   const getContent = () => {
-    if (songsLoading) {
-      return <Loading />;
-    }
-
     if (searchTerm.length < 3) {
       return <div className="text-center text-gray-dark">Please enter at least 3 characters</div>;
+    }
+
+    if (songsLoading) {
+      return <Loading />;
     }
 
     if (searchResults.length === 0) {
@@ -62,7 +62,6 @@ export const Songs = (): React.ReactElement => {
         value={searchTerm}
         onChange={setSearchTerm}
         placeholder="Search song titles..."
-        disabled={songsLoading}
       />
       <div className="flex flex-col w-full mt-8">{getContent()}</div>
     </div>
