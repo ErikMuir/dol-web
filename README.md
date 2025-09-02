@@ -1,5 +1,39 @@
 # Duke of Lizards Web
 
+## Setup
+
+### Install dependencies
+
+```bash
+npm install
+```
+
+### Configure environment
+
+1. Copy the file `.env-example`, naming it `.env` (git is already configured to ignore this file).
+
+```bash
+cp ./.env-example ./.env
+```
+
+2. Open the newly created `.env` file and set an appropriate value for each environment variable (e.g. `AWS_REGION=us-east-1`)
+
+## Testing
+
+Tests use Jest + React Testing Library. Config lives in `jest.config.js` and `jest.setup.ts`.
+
+### Run tests:
+
+```bash
+npm run test
+```
+
+### Run tests in watch mode:
+
+```bash
+npm run test:watch
+```
+
 ## UI Routes
 
 - `/` - Home
@@ -28,10 +62,11 @@
 - `/api/performances/[showDate]/[position]` - GET
 - `/api/reviews/[date]` - GET
 - `/api/setlists/[dateOrSlug]` - GET
-- `/api/setlists/[date]/[position]` - GET
+- `/api/setlists/[dateOrSlug]/[position]` - GET
 - `/api/shows` - GET
 - `/api/shows/[date]` - GET
 - `/api/songs/[songId]` - GET
+- `/api/tracks/[date]` - GET
 - `/api/tracks/[date]/[position]` - GET
 
 ## Public Routes

@@ -21,6 +21,6 @@ export function useSong(songId?: number | string) {
 }
 
 export function useSongs() {
-  const { data, isLoading, error } = useSWR<Song[]>('/api/songs', fetchStandardJson);
+  const { data, isLoading, error } = useSWR<Song[]>("/api/songs", fetchStandardJson);
   return { songs: data, songsLoading: isLoading, songsError: error };
 }
