@@ -21,6 +21,7 @@ import { sleep } from "@erikmuir/dol-lib/common/utils";
 import { WalletConnectContext } from "./context";
 import { WalletInterface } from "./wallet-interface";
 import { fetchJson } from "@/utils";
+import { ActionContext } from "@erikmuir/dol-lib/types";
 
 // Created refreshEvent because `dappConnector.walletConnectClient.on(eventName, syncWithWalletConnectContext)` would not call syncWithWalletConnectContext
 // Reference usage from walletconnect implementation https://github.com/hashgraph/hedera-wallet-connect/blob/main/src/lib/dapp/index.ts#L120C1-L124C9
@@ -57,7 +58,7 @@ export const auditClient = async (
   action: "NFT_PURCHASE" | "TOKEN_ASSOCIATE",
   success: boolean,
   accountId: AccountId,
-  context: any = {}
+  context: ActionContext = {}
 ) => {
   await fetchJson(`/api/audit/${accountId.toString()}`, {
     method: "POST",

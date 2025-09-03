@@ -1,14 +1,15 @@
 import { NextResponse } from "next/server";
 
-export type TestRequest = Partial<Request> & { method?: string; url?: string; body?: any };
+export type TestRequest = Partial<Request> & { method?: string; url?: string; body?: unknown };
 
-export function makeNextRequest(init: TestRequest = {}): any {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export function makeNextRequest(_init: TestRequest = {}): NextResponse {
   // For our handlers we only pass NextRequest in signature but rarely use it.
   // Return a minimal stub.
-  return {} as any;
+  return {} as NextResponse;
 }
 
-export async function parseJson(res: any) {
+export async function parseJson(res: NextResponse) {
   const json = await res.json();
   return json;
 }

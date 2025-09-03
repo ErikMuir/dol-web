@@ -8,14 +8,14 @@ import { BaseAttributeProps } from "./types";
 
 export type DropDownOption = {
   label: string;
-  value?: any;
+  value?: string;
 };
 
 export type DropDownAttributeProps = BaseAttributeProps & {
   id: string;
   options?: DropDownOption[];
-  currentValue?: any;
-  onChange: (value?: any) => void;
+  currentValue?: string;
+  onChange: (value?: string) => void;
   disabled?: boolean;
   nullOptionLabel?: string;
 };

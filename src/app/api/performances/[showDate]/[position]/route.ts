@@ -13,7 +13,7 @@ export async function GET(
     const { showDate, position } = await params;
     const performance = await getPerformance(showDate, parseInt(position));
     return performance ? success(performance) : notFound();
-  } catch (e: any) {
+  } catch (e) {
     console.error(e);
     return errorResponse((e as Error).message, 503);
   }

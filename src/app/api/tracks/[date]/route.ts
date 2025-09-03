@@ -28,7 +28,7 @@ export async function GET(
         });
       }
     }
-  } catch (e: any) {
+  } catch (e) {
     console.error(e);
   }
   return success(tracks);

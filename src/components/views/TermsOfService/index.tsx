@@ -21,7 +21,7 @@ export const TermsOfService = (): React.ReactNode => {
         (&apos;dApp&apos;) celebrating the jam-fueled beauty of Phish live
         performances — one NFT at a time. By connecting your wallet and using
         this site, you agree to these Terms of Service (&apos;Terms&apos;). If
-        you're not cool with them, the Helping Friendly Book advises you to
+        you&apos;re not cool with them, the Helping Friendly Book advises you to
         kindly disconnect.
       </div>
       {divider}

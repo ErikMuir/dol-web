@@ -18,25 +18,25 @@ describe("use-setlists hooks", () => {
   });
 
   it("useSetlists returns array", async () => {
-    (Utils.fetchStandardJson as unknown as jest.Mock).mockResolvedValueOnce([{ id: 1 }] as any);
+    (Utils.fetchStandardJson as unknown as jest.Mock).mockResolvedValueOnce([{ id: 1 }]);
     const { result } = renderHook(() => useSetlists("1994-07-08"), { wrapper });
     await waitFor(() => expect(result.current.setlists).toBeDefined());
   });
 
   it("useSetlistsBySongId returns array", async () => {
-    (Utils.fetchStandardJson as unknown as jest.Mock).mockResolvedValueOnce([{ id: 2 }] as any);
+    (Utils.fetchStandardJson as unknown as jest.Mock).mockResolvedValueOnce([{ id: 2 }]);
     const { result } = renderHook(() => useSetlistsBySongId(1), { wrapper });
     await waitFor(() => expect(result.current.setlists).toBeDefined());
   });
 
   it("useSetlistsBySongSlug returns array", async () => {
-    (Utils.fetchStandardJson as unknown as jest.Mock).mockResolvedValueOnce([{ id: 3 }] as any);
+    (Utils.fetchStandardJson as unknown as jest.Mock).mockResolvedValueOnce([{ id: 3 }]);
     const { result } = renderHook(() => useSetlistsBySongSlug("slug"), { wrapper });
     await waitFor(() => expect(result.current.setlists).toBeDefined());
   });
 
   it("useSetlist returns item", async () => {
-    (Utils.fetchStandardJson as unknown as jest.Mock).mockResolvedValueOnce({ id: 4 } as any);
+    (Utils.fetchStandardJson as unknown as jest.Mock).mockResolvedValueOnce({ id: 4 });
     const { result } = renderHook(() => useSetlist("1994-07-08", "1"), { wrapper });
     await waitFor(() => expect(result.current.setlist).toBeDefined());
   });

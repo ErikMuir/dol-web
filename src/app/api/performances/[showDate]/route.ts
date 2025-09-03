@@ -13,7 +13,7 @@ export async function GET(
     const { showDate } = await params;
     const performances = await queryPerformances(showDate);
     return success(performances);
-  } catch (e: any) {
+  } catch (e) {
     console.error(e);
     return success([]);
   }

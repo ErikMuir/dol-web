@@ -21,7 +21,7 @@ export async function GET(
       artistId ? review.artistId === artistId : true
     );
     reviews.push(...filteredReviews);
-  } catch (e: any) {
+  } catch (e) {
     console.error(e);
   }
   return success(reviews);

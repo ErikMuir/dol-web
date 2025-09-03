@@ -13,7 +13,7 @@ export async function GET(
     const { key } = await params;
     const auditLogs = await queryAuditLogs(key);
     return success(auditLogs.map((log) => log.data));
-  } catch (e: any) {
+  } catch (e) {
     console.error(e);
     return success([]);
   }

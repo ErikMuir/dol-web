@@ -11,8 +11,8 @@ export const NoPages = (): React.ReactNode => (
   <div className="flex flex-col items-center justify-center w-full h-[calc(100vh-420px)] gap-4">
     <h1 className="text-[60px] text-center">Build Your Collection</h1>
     <div className="text-xl text-balance text-center">
-      Here you'll find all the pages of the Helping Friendly Book for which
-      you've laid claim.
+      Here you&apos;ll find all the pages of the Helping Friendly Book for which
+      you&apos;ve laid claim.
     </div>
     <div>&nbsp;</div>
     <div className="flex items-center justify-center gap-4">

@@ -196,6 +196,8 @@ export const Performance = (): React.ReactNode => {
     trackLoading,
     performanceLoading,
     metadataLoading,
+    pageLoaded,
+    showImageAttributes,
   ]);
 
   const handleBgColorChanged = useCallback(
@@ -226,7 +228,7 @@ export const Performance = (): React.ReactNode => {
     if (e.key === "Enter") randomizeAttributes();
   }, []);
 
-  const handleRandomizeClick = useCallback((e: React.MouseEvent) => {
+  const handleRandomizeClick = useCallback(() => {
     randomizeAttributes();
   }, []);
 

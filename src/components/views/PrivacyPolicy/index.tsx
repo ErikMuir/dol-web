@@ -57,8 +57,8 @@ export const PrivacyPolicy = (): React.ReactNode => {
         </ul>
         <div>
           We do <span className="font-bold">not</span> use your data for
-          advertising, profiling, or selling to third parties. You're not a
-          product — you're a cherished author of the Helping Friendly Book.
+          advertising, profiling, or selling to third parties. You&apos;re not a
+          product — you&apos;re a cherished author of the Helping Friendly Book.
         </div>
       </div>
       {divider}
@@ -114,7 +114,7 @@ export const PrivacyPolicy = (): React.ReactNode => {
         </div>
         <div>
           We don&apos;t knowingly collect data from anyone under 13, nor do we
-          perform identity verification. If you're here, you&apos;re assumed to
+          perform identity verification. If you&apos;re here, you&apos;re assumed to
           be old enough to groove and legally able to connect a wallet.
         </div>
       </div>

@@ -16,7 +16,7 @@ export async function GET(
       throw new Error(`Missing songId.`);
     }
     song = await getResource<Song>("songs", songId);
-  } catch (e: any) {
+  } catch (e) {
     console.error(e);
   }
   return success(song);

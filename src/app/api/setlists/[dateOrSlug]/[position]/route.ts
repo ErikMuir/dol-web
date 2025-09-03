@@ -23,7 +23,7 @@ export async function GET(
         `${s.position}` === position &&
         s.artistId === artistId
     );
-  } catch (e: any) {
+  } catch (e) {
     console.error(e);
   }
   return success(setlist);

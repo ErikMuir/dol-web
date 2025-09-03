@@ -1,6 +1,7 @@
 import { GET } from "../route";
 import * as Api from "@erikmuir/dol-lib/server/api";
 import { suppressConsoleErrors } from "@/test-utils/console";
+import { NextRequest } from "next/server";
 
 jest.mock("@erikmuir/dol-lib/server/api", () => ({
   getSetlistsByShowDate: jest.fn(),
@@ -12,7 +13,7 @@ const makeParams = (dateOrSlug: string) => ({ params: Promise.resolve({ dateOrSl
 describe("/api/setlists/[dateOrSlug] GET", () => {
   suppressConsoleErrors();
   it("throws on missing param and returns empty array", async () => {
-    const res = await GET({} as any, { params: Promise.resolve({}) } as any);
+    const res = await GET({} as NextRequest, { params: Promise.resolve({ dateOrSlug: undefined as unknown as string}) });
     expect(res.status).toBe(200);
     const body = await res.json();
     expect(body.ok).toBe(true);
@@ -20,7 +21,7 @@ describe("/api/setlists/[dateOrSlug] GET", () => {
   });
 
   it("rejects short param and returns empty array", async () => {
-    const res = await GET({} as any, makeParams("ab") as any);
+    const res = await GET({} as NextRequest, makeParams("ab"));
     expect(res.status).toBe(200);
     const body = await res.json();
     expect(body.data).toEqual([]);
@@ -28,7 +29,7 @@ describe("/api/setlists/[dateOrSlug] GET", () => {
 
   it("chooses getSetlistsByShowDate for valid date", async () => {
     (Api.getSetlistsByShowDate as jest.Mock).mockResolvedValue([{ artistId: 1 }, { artistId: 2 }]);
-    const res = await GET({} as any, makeParams("1994-07-08") as any);
+    const res = await GET({} as NextRequest, makeParams("1994-07-08"));
     const body = await res.json();
     expect(Api.getSetlistsByShowDate).toHaveBeenCalled();
     expect(Api.getSetlistsBySong).not.toHaveBeenCalled();
@@ -38,7 +39,7 @@ describe("/api/setlists/[dateOrSlug] GET", () => {
 
   it("chooses getSetlistsBySong for non-date slug", async () => {
     (Api.getSetlistsBySong as jest.Mock).mockResolvedValue([{ artistId: 1 }, { artistId: 3 }]);
-    const res = await GET({} as any, makeParams("harpua") as any);
+    const res = await GET({} as NextRequest, makeParams("harpua"));
     const body = await res.json();
     expect(Api.getSetlistsBySong).toHaveBeenCalled();
     expect(body.data).toEqual([{ artistId: 1 }]);

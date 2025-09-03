@@ -11,9 +11,9 @@ export type WalletContext = {
 
 const defaultContext: WalletContext = {
   accountId: "",
-  setAccountId: (newValue: string) => {},
+  setAccountId: () => {},
   isConnected: false,
-  setIsConnected: (newValue: boolean) => {},
+  setIsConnected: () => {},
 };
 
 export const WalletConnectContext: Context<WalletContext> =

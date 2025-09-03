@@ -25,7 +25,7 @@ export async function GET(
       const adjustedPosition = parsedPosition - soundchecks;
       track = show.tracks.find((t) => t.position === adjustedPosition);
     }
-  } catch (e: any) {
+  } catch (e) {
     console.error(e);
   }
   return success(track);

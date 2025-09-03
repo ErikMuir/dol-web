@@ -18,7 +18,7 @@ export async function GET(
     const allSetlists = (await action(dateOrSlug, {}, true)) || [];
     const filteredSetlists = allSetlists.filter((setlist) => setlist.artistId === 1);
     setlists.push(...filteredSetlists);
-  } catch (e: any) {
+  } catch (e) {
     console.error(e);
   }
   return success(setlists);

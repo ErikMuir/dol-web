@@ -23,12 +23,12 @@ describe("api-responses", () => {
   });
 
   it("success forces status < 400", () => {
-    const res = success({ a: 1 }, 500 as any);
+    const res = success({ a: 1 }, 500);
     expect(res.status).toBe(200);
   });
 
   it("errorResponse forces status >= 400", () => {
-    const res = errorResponse("oops", 200 as any);
+    const res = errorResponse("oops", 200);
     expect(res.status).toBe(500);
   });
 

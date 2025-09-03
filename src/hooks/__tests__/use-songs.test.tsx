@@ -18,13 +18,13 @@ describe("use-songs hooks", () => {
   });
 
   it("useSongs returns data", async () => {
-    (Utils.fetchStandardJson as unknown as jest.Mock).mockResolvedValueOnce([{ id: 1 }] as any);
+    (Utils.fetchStandardJson as unknown as jest.Mock).mockResolvedValueOnce([{ id: 1 }]);
     const { result } = renderHook(() => useSongs(), { wrapper });
     await waitFor(() => expect(result.current.songs).toBeDefined());
   });
 
   it("useSong returns data when id provided", async () => {
-    (Utils.fetchStandardJson as unknown as jest.Mock).mockResolvedValueOnce({ id: 1 } as any);
+    (Utils.fetchStandardJson as unknown as jest.Mock).mockResolvedValueOnce({ id: 1 });
     const { result } = renderHook(() => useSong(1), { wrapper });
     await waitFor(() => expect(result.current.song).toBeDefined());
   });

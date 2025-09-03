@@ -13,7 +13,7 @@ describe("/api/shows GET", () => {
       { artistId: 1 },
       { artistId: 2 },
     ]);
-    const res = await GET({} as any);
+    const res = await GET();
     expect(res.status).toBe(200);
     const json = await res.json();
     expect(json.ok).toBe(true);
@@ -23,7 +23,7 @@ describe("/api/shows GET", () => {
 
   it("handles exceptions and still returns ok with empty array", async () => {
     (Dynamo.queryResources as jest.Mock).mockRejectedValue(new Error("boom"));
-    const res = await GET({} as any);
+    const res = await GET();
     expect(res.status).toBe(200);
     const json = await res.json();
     expect(json.ok).toBe(true);

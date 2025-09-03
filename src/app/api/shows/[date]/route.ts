@@ -16,7 +16,7 @@ export async function GET(
       throw new Error(`Invalid date: ${date}`);
     }
     show = await getResource<Show>("shows", date);
-  } catch (e: any) {
+  } catch (e) {
     console.error(e);
   }
   return success(show);

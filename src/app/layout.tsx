@@ -5,7 +5,6 @@ import { Footer } from "@/components/globals/Footer";
 import { Header } from "@/components/globals/Header";
 import { jost } from "@/styles/fonts";
 import "@/styles/globals.css";
-import { Nav } from "@/components/globals/Nav";
 import { Metadata } from "next";
 import { WalletConnectContextProvider, WalletConnectClient } from "@/wallet";
 
