@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import { ItemCountPill } from "../ItemCountPill";
+import { ItemCountPill } from "./ItemCountPill";
 
 describe("ItemCountPill", () => {
   it("renders singular/plural correctly", () => {

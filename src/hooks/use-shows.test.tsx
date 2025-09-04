@@ -1,7 +1,7 @@
 import { renderHook, waitFor } from "@testing-library/react";
 import { SWRConfig } from "swr";
 import * as Utils from "@/utils";
-import { useShows, useShow, useShowsByDate, useShowsByVenue } from "../use-shows";
+import { useShows, useShow, useShowsByDate, useShowsByVenue } from "./use-shows";
 
 jest.mock("@/utils", () => ({
   ...jest.requireActual("@/utils"),

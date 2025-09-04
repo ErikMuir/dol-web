@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import { SearchBar } from "../SearchBar";
+import { SearchBar } from "./SearchBar";
 
 describe("SearchBar", () => {
   it("renders and focuses input on mount", () => {

@@ -1,11 +1,11 @@
 import { render, screen } from "@testing-library/react";
-import { Header } from "../Header";
-import { Footer } from "../Footer";
+import { Header } from "./Header";
+import { Footer } from "./Footer";
 
-jest.mock("../Wallet", () => ({ Wallet: () => <div>Wallet</div> }));
-jest.mock("../Nav", () => ({ Nav: () => <nav>Nav</nav> }));
-jest.mock("../../common/DiscordLink", () => ({ DiscordLink: () => <div>Discord</div> }));
-jest.mock("../../common/Shapes", () => ({ Shapes: () => <div>Shapes</div> }));
+jest.mock("./Wallet", () => ({ Wallet: () => <div>Wallet</div> }));
+jest.mock("./Nav", () => ({ Nav: () => <nav>Nav</nav> }));
+jest.mock("../common/DiscordLink", () => ({ DiscordLink: () => <div>Discord</div> }));
+jest.mock("../common/Shapes", () => ({ Shapes: () => <div>Shapes</div> }));
 
 describe("Header and Footer", () => {
   it("renders Header contents", () => {

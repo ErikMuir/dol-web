@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import { Nav } from "../Nav";
+import { Nav } from "./Nav";
 
 describe("Nav", () => {
   it("renders tabs and back button", () => {

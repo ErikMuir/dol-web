@@ -1,7 +1,7 @@
 import { renderHook, waitFor } from "@testing-library/react";
 import { SWRConfig } from "swr";
 import * as Utils from "@/utils";
-import { useSetlists, useSetlistsBySongId, useSetlistsBySongSlug, useSetlist } from "../use-setlists";
+import { useSetlists, useSetlistsBySongId, useSetlistsBySongSlug, useSetlist } from "./use-setlists";
 
 jest.mock("@/utils", () => ({
   ...jest.requireActual("@/utils"),

@@ -4,7 +4,8 @@ import { NextRequest, NextResponse } from "next/server";
 
 // Helper to adapt a Next.js route GET handler: (req: NextRequest, ctx?) => NextResponse
 // We ignore the real NextRequest and pass minimal stubs; handler returns a Response-like
-export function createApp(routes: Array<{ path: string; handler: (req: NextRequest, ctx?: unknown) => Promise<NextResponse> }>) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function createApp(routes: Array<{ path: string; handler: (req: NextRequest, ctx?: any) => Promise<NextResponse> }>) {
   const app = express();
   app.use(express.json());
 

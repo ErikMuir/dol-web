@@ -1,5 +1,5 @@
 import { render } from "@testing-library/react";
-import { Loading } from "../Loading";
+import { Loading } from "./Loading";
 
 jest.mock("@erikmuir/dol-lib/common/dapp", () => ({
   getLyricByCategory: () => [
