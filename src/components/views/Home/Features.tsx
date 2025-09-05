@@ -14,8 +14,8 @@ export const Features = (): React.ReactElement => {
         <Feature
           twTextColor="text-dol-green"
           title="A seeker's tool"
-          content="Filter the chronicles by date or location and find the performances
-            that resonate with you."
+          content="Filter the chronicles by song, date, or location and find the 
+            performances that resonate with you."
         />
         <Feature
           twTextColor="text-dol-red"

@@ -19,7 +19,7 @@ export const Nav = (): React.ReactElement => {
         />
         <NavTab
           name="Helping Friendly Book"
-          href="/helping-friendly-book/songs"
+          href="/helping-friendly-book/dates"
           color="bg-dol-green"
           isFaulty
           isCurrentTab={
@@ -54,7 +54,6 @@ export const Nav = (): React.ReactElement => {
         />
       </div>
     </div>
-    
   );
 };
 

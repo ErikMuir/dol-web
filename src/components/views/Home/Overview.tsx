@@ -15,9 +15,9 @@ export const Overview = (): React.ReactElement => {
       </div>
       <div>
         Here, in the halls of my mighty kingdom, you may search the annals of
-        history—by date, by location. Should you find a song&apos;s performance
-        still unclaimed, you may inscribe it into the record, forever securing
-        its place in the Helping Friendly Book.
+        history—by date, location, or song. Should you find a song&apos;s
+        performance still unclaimed, you may inscribe it into the record,
+        forever securing its place in the Helping Friendly Book.
       </div>
       <div>
         But be warned—once a performance is minted, no other shall lay claim to
