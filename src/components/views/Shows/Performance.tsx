@@ -201,17 +201,17 @@ export const Performance = (): React.ReactNode => {
   ]);
 
   const handleBgColorChanged = useCallback(
-    (color: DolColorHex) => setBgColor(color),
+    (color?: string) => { if (color) setBgColor(color as DolColorHex); },
     [setBgColor]
   );
 
   const handleDonutChanged = useCallback(
-    (color: DolColorHex) => setDonut(color),
+    (color?: string) => { if (color) setDonut(color as DolColorHex); },
     [setDonut]
   );
 
   const handleSubjectChanged = useCallback(
-    (position: Subject) => setSubject(position),
+    (position?: string) => { if (position) setSubject(position as Subject); },
     [setSubject]
   );
 

@@ -31,9 +31,9 @@ export type ImageAttributesProps = {
   donut?: DolColorHex;
   subject?: Subject;
   minted?: boolean;
-  handleBgColorChanged: (bgColor: DolColorHex) => void;
-  handleDonutChanged: (donut: DolColorHex) => void;
-  handleSubjectChanged: (subject: Subject) => void;
+  handleBgColorChanged: (bgColor?: string) => void;
+  handleDonutChanged: (donut?: string) => void;
+  handleSubjectChanged: (subject?: string) => void;
   handleRandomizeClick: (event: React.MouseEvent) => void;
   handleRandomizeKeyDown: (event: React.KeyboardEvent) => void;
 };

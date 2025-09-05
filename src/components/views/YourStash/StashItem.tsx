@@ -7,7 +7,8 @@ import { twMerge } from "tailwind-merge";
 import { PerformanceAttributes } from "@erikmuir/dol-lib/types";
 import {
   getCollectionName,
-  getEraTextColorClass,
+  getEraDolColorClass,
+  getDolTextColorClass,
   extractPerformanceAttributes,
 } from "@erikmuir/dol-lib/common/dapp";
 import {
@@ -69,7 +70,8 @@ export const StashItem = ({
       );
     }
 
-    const textColorClass = getEraTextColorClass(attributes.date);
+    const eraColor = getEraDolColorClass(attributes.date);
+    const textColorClass = getDolTextColorClass(eraColor);
 
     return (
       <div className="flex items-start p-2 gap-2">

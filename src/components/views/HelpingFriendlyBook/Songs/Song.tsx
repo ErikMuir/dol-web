@@ -1,10 +1,15 @@
-import { usePathname } from "next/navigation";
-import { useSetlistsBySongSlug } from "@/hooks";
-import { Loading } from "@/components/common/Loading";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { twMerge } from "tailwind-merge";
+import {
+  getDolBackgroundColorClass,
+  getEraDolColorClass,
+  getVenueLocation,
+} from "@erikmuir/dol-lib/common/dapp";
 import { toFriendlyDate } from "@erikmuir/dol-lib/common/utils";
-import { getVenueLocation } from "@erikmuir/dol-lib/common/dapp";
+import { Loading } from "@/components/common/Loading";
+import { MintStatusIndicator } from "@/components/common/MintStatusIndicator";
+import { useSetlistsBySongSlug } from "@/hooks";
 
 export const Song = (): React.ReactElement => {
   const pathname = usePathname();
@@ -23,41 +28,54 @@ export const Song = (): React.ReactElement => {
 
   const setlistItems = setlists.map((setlist, index) => {
     const { showDate, position, venue, city, state, country } = setlist;
+    const eraColor = getEraDolColorClass(showDate);
+    const eraBgColor = getDolBackgroundColorClass(eraColor);
     return (
-      <div
+      <Link
         key={index}
+        href={`/shows/${showDate}/${position}`}
         className={twMerge(
-        "flex p-2 w-full border-b border-gray-dark",
-        index === 0 && "border-t",
-        "hover:bg-gray-dark duration-300",
-      )}>
-        <div className="text-xl min-w-[40px]">{index + 1}.</div>
-        <Link
-          href={`/shows/${showDate}/${position}`}
-          className="flex flex-col grow"
-        >
-          <div className="text-lg text-balance">
+          "flex p-2 w-full",
+          "bg-gray-dark/25",
+          "border border-gray-dark/50",
+          "rounded-lg shadow-md",
+          "hover:bg-gray-dark/50 duration-300",
+        )}
+      >
+        <div className={twMerge("w-1 rounded-full", eraBgColor)} />
+        <div className="flex flex-col items-center grow text-center text-balance">
+          <div className="text-lg">
             {toFriendlyDate(showDate)}
           </div>
-          <div className="text-sm text-balance text-dol-yellow/75">
+          <div className="text-sm">
             {venue}, {getVenueLocation(city, state, country)}
           </div>
-        </Link>
-      </div>
+          <MintStatusIndicator
+            date={showDate}
+            position={position}
+            className="mt-2 text-xs"
+          />
+        </div>
+        <div className="w-1"></div>
+      </Link>
     );
   });
 
   return (
-    <div className="w-80 mt-4 mx-auto flex flex-col">
-      <div className="mb-8">
-        <div className="text-center text-4xl text-balance">
+    <div className={twMerge(
+      "w-[320px] md:w-[500px]",
+      "mt-4 mx-auto",
+      "flex flex-col items-center",
+      )}>
+      <div className="mb-6">
+        <div className="text-center text-3xl text-balance">
           {setlists[0].song}
         </div>
         <div className="text-center text-sm text-gray-medium">
           {setlists?.length} Performances Found
         </div>
       </div>
-      <div className="flex flex-col items-center justify-center">
+      <div className="w-full flex flex-col gap-3">
         {setlistItems}
       </div>
     </div>
