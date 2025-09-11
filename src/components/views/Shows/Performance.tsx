@@ -472,6 +472,8 @@ export const Performance = (): React.ReactNode => {
     return <Loading sizeInPixels={90} showLyric />;
   }
 
+  const showAuditLogs = false;
+
   return (
     <div className="w-[320px] md:w-[500px] lg:w-[680px] mt-14 mx-auto flex flex-col">
       <div className="flex flex-col items-center justify-center gap-6 w-full">
@@ -540,13 +542,17 @@ export const Performance = (): React.ReactNode => {
         songLoading={songLoading}
       />
 
-      <SectionHeader
-        text="Audit Logs"
-        borderClass="border-gray-medium"
-        backgroundClass="bg-dol-black"
-      />
+      {showAuditLogs && (
+        <SectionHeader
+          text="Audit Logs"
+          borderClass="border-gray-medium"
+          backgroundClass="bg-dol-black"
+        />
+      )}
 
-      <AuditLogsAttribute setlist={setlist} setlistLoading={setlistLoading} />
+      {showAuditLogs && (
+        <AuditLogsAttribute setlist={setlist} setlistLoading={setlistLoading} />
+      )}
     </div>
   );
 };
