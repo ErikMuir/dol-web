@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { twMerge } from "tailwind-merge";
-import { Setlist, DolPerformance } from "@erikmuir/dol-lib/types";
+import { Setlist } from "@erikmuir/dol-lib/types";
 import { getSetText, sortByPosition } from "@erikmuir/dol-lib/common/dapp";
 import {
   daysUntil,
@@ -15,12 +14,13 @@ import { useReviewsByDate } from "@/hooks/use-reviews";
 import { useShow } from "@/hooks/use-shows";
 import { usePerformances } from "@/hooks/use-performances";
 import { Error } from "../Error";
+import { MintStatusIndicator, MintStatusIndicatorType } from "@/components/common/MintStatusIndicator";
 
 export const Show = (): React.ReactElement => {
   const pathname = usePathname();
   const pathParts = pathname.split("/");
   const date = pathParts.at(-1) ?? "";
-  const { performances, performancesLoading } = usePerformances(date);
+  const { performances } = usePerformances(date);
   const { setlists, setlistsLoading } = useSetlists(date);
   const { reviews } = useReviewsByDate(date);
   const { show } = useShow(date);
@@ -59,60 +59,12 @@ export const Show = (): React.ReactElement => {
     ...new Set(setlists.sort(sortByPosition).map((setlist) => setlist.set)),
   ];
 
-  const getSongText = (setlist: Setlist) => {
-    const { song, transition, transMark } = setlist;
-    return (
-      <div>
-        {song}
-        {transition !== 1 ? transMark : ""}
-      </div>
-    );
-  };
-
-  const getMintStatusText = (performance: DolPerformance) => {
-    switch (true) {
-      case performance === undefined:
-        return null;
-      case Boolean(performance.serial):
-        return "Claimed";
-      case Boolean(
-        performance.lockedUntil && performance.lockedUntil > Date.now()
-      ):
-        return "Locked";
-      default:
-        return "Available";
-    }
-  };
-
-  const getMintStatusDiv = (setlist: Setlist) => {
-    if (performancesLoading) {
-      return (
-        <div className="relative pr-4">
-          <Loading sizeInPixels={20} />
-        </div>
-      );
-    }
-    const { showDate, position } = setlist;
+  const getSongRow = (setlist: Setlist) => {
+    const { id, showDate, position, song, transition, transMark } = setlist;
+    const href = `/shows/${showDate}/${position}`;
     const performance = performances?.find(
       (x) => x.showDate === showDate && x.position === position
     );
-    if (!performance) return null;
-    const mintStatus = getMintStatusText(performance);
-    return (
-      <div
-        className={twMerge(
-          "uppercase tracking-widest text-xs text-gray-medium",
-          performance.serial ? "text-dol-yellow" : "text-dol-green"
-        )}
-      >
-        {mintStatus}
-      </div>
-    );
-  };
-
-  const getSongRow = (setlist: Setlist) => {
-    const { id, showDate, position } = setlist;
-    const href = `/shows/${showDate}/${position}`;
     return (
       <div
         key={id}
@@ -120,8 +72,14 @@ export const Show = (): React.ReactElement => {
       >
         <Link href={href}>
           <div className="p-3 px-4 flex items-center justify-between">
-            {getSongText(setlist)}
-            {getMintStatusDiv(setlist)}
+            <div>{song}{transition !== 1 ? transMark : ""}</div>
+            <MintStatusIndicator
+              date={showDate}
+              position={position}
+              performance={performance}
+              type={MintStatusIndicatorType.LabelAndEmoji}
+              className=""
+            />
           </div>
         </Link>
       </div>

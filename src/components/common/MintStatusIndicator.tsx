@@ -2,18 +2,21 @@
 
 import { useEffect, useRef, useState } from "react";
 import { twMerge } from "tailwind-merge";
-import { Loading } from "./Loading";
+import { DolPerformance } from "@erikmuir/dol-lib/types";
 import { usePerformance } from "@/hooks";
+import { Loading } from "./Loading";
 
 export enum MintStatusIndicatorType {
-  EmojiAndLabel = "EmojiAndLabel",
   Emoji = "Emoji",
   Label = "Label",
+  EmojiAndLabel = "EmojiAndLabel",
+  LabelAndEmoji = "LabelAndEmoji",
 }
 
 export type MintStatusIndicatorProps = {
   date: string;
   position: number;
+  performance?: DolPerformance;
   type?: MintStatusIndicatorType;
   className?: string;
 };
@@ -21,15 +24,24 @@ export type MintStatusIndicatorProps = {
 export const MintStatusIndicator = ({
   date,
   position,
+  performance: providedPerformance,
   type = MintStatusIndicatorType.EmojiAndLabel,
   className,
 }: MintStatusIndicatorProps): React.ReactElement => {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [shouldFetch, setShouldFetch] = useState(false);
+  const [coalescedPerformance, setCoalescedPerformance] = useState<DolPerformance | undefined>(providedPerformance);
+  const { performance: fetchedPerformance, performanceLoading } = usePerformance(date, shouldFetch ? position : undefined);
+
+  useEffect(() => {
+    if (!providedPerformance && fetchedPerformance) {
+      setCoalescedPerformance(fetchedPerformance);
+    }
+  }, [providedPerformance, fetchedPerformance]);
 
   useEffect(() => {
     const element = containerRef.current;
-    if (!element || shouldFetch) return;
+    if (!element || shouldFetch || providedPerformance) return;
 
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -40,7 +52,7 @@ export const MintStatusIndicator = ({
       },
       {
         root: null,
-        // Start fetching a bit before entering the viewport
+        // Start fetching when within 200px of the viewport
         rootMargin: "200px 0px",
         threshold: 0,
       }
@@ -48,54 +60,54 @@ export const MintStatusIndicator = ({
 
     observer.observe(element);
     return () => observer.disconnect();
-  }, [shouldFetch]);
+  }, [providedPerformance, shouldFetch]);
 
-  const { performance, performanceLoading } = usePerformance(date, shouldFetch ? position : undefined);
+  const Spinner = () => <span className="relative -left-3"><Loading sizeInPixels={16} /></span>;
 
-  let textColor: string;
-  let emoji: React.ReactNode;
-  let statusText: string;
+  const notFound = Boolean(!coalescedPerformance);
+  const isMinted = Boolean(coalescedPerformance?.serial);
+  const isLocked = Boolean(coalescedPerformance?.lockedUntil && coalescedPerformance.lockedUntil > Date.now());
 
-  if (!shouldFetch) {
-    textColor = "text-gray-medium";
-    emoji = "❓";
-    statusText = "Unknown";
-  } else if (performanceLoading) {
-    textColor = "text-gray-medium";
-    emoji = <Loading sizeInPixels={16} />;
-    statusText = "Loading";
-  } else if (!performance) {
-    textColor = "text-gray-medium";
-    emoji = "❓";
-    statusText = "Unknown";
-  } else if (performance.serial) {
-    textColor = "text-dol-red";
-    emoji = "🔴";
-    statusText = "Claimed";
-  } else if (performance.lockedUntil && performance.lockedUntil > Date.now()) {
-    textColor = "text-dol-yellow";
-    emoji = "🟡";
-    statusText = "Locked";
-  } else {
-    textColor = "text-dol-green";
-    emoji = "🟢";
-    statusText = "Available";
+  const textColor = performanceLoading || notFound ? "text-gray-medium"
+    : isMinted ? "text-dol-red"
+    : isLocked ? "text-dol-yellow"
+    : "text-dol-green";
+
+  const label = performanceLoading ? "Loading"
+    : notFound ? "Unknown"
+    : isMinted ? "Claimed"
+    : isLocked ? "Locked"
+    : "Available";
+
+  const emoji = performanceLoading ? <Spinner />
+    : notFound ? "❓"
+    : isMinted ? "🔴"
+    : isLocked ? "🟡"
+    : "🟢";
+
+  const title = type === MintStatusIndicatorType.Emoji ? label : "";
+
+  const emojiSpan = <span key={`emoji-${date}-${position}`} title={title}>{emoji}</span>;
+  const labelSpan = <span key={`label-${date}-${position}`} className={textColor}>{label}</span>;
+
+  const spans: React.ReactNode[] = [];
+
+  switch (type) {
+    case MintStatusIndicatorType.Emoji:
+      spans.push(emojiSpan);
+      break;
+    case MintStatusIndicatorType.Label:
+      spans.push(labelSpan);
+      break;
+    case MintStatusIndicatorType.EmojiAndLabel:
+      spans.push(emojiSpan, labelSpan);
+      break;
+    case MintStatusIndicatorType.LabelAndEmoji:
+      spans.push(labelSpan, emojiSpan);
+      break;
   }
 
-  const emojiClass = twMerge(performanceLoading ? "relative -left-3" : "");
+  className = twMerge("flex items-center gap-1", "text-xs uppercase tracking-widest", className);
 
-  return (
-    <div
-      ref={containerRef}
-      className={twMerge(
-        "flex items-center gap-1",
-        "uppercase tracking-widest",
-        textColor,
-        className,
-      )}
-    >
-      {type !== MintStatusIndicatorType.Label && <span className={emojiClass}>{emoji}</span>}
-      {type !== MintStatusIndicatorType.Emoji && <span>{statusText}</span>}
-    </div>
-  );
+  return <div ref={containerRef} className={className}>{spans}</div>;
 };

@@ -50,11 +50,7 @@ export const Song = (): React.ReactElement => {
           <div className="text-sm">
             {venue}, {getVenueLocation(city, state, country)}
           </div>
-          <MintStatusIndicator
-            date={showDate}
-            position={position}
-            className="mt-2 text-xs"
-          />
+          <MintStatusIndicator date={showDate} position={position} className="mt-2" />
         </div>
         <div className="w-1"></div>
       </Link>
