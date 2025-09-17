@@ -117,7 +117,7 @@ export const LogSection = ({
   const row = "px-4 py-2 text-xs";
   const border = "border-b border-gray-dark-2";
   const monospace = "font-mono";
-  const header = "uppercase bg-dol-black sticky top-0 bg-[#0a1a31]";
+  const header = "uppercase bg-dol-dark sticky top-0 bg-[#0a1a31]";
   const rows: React.ReactNode[] = [];
 
   if (auditLogsLoading) {
@@ -195,7 +195,7 @@ export const LogSection = ({
                 title="First Page"
                 className={twMerge(
                   "bg-transparent duration-500",
-                  isFirstPage ? "text-gray-medium" : "text-dol-white",
+                  isFirstPage ? "text-gray-medium" : "text-dol-light",
                   isFirstPage ? "" : "hover:bg-dol-blue"
                 )}
               >
@@ -207,7 +207,7 @@ export const LogSection = ({
                 title="Previous Page"
                 className={twMerge(
                   "bg-transparent duration-500",
-                  isFirstPage ? "text-gray-medium" : "text-dol-white",
+                  isFirstPage ? "text-gray-medium" : "text-dol-light",
                   isFirstPage ? "" : "hover:bg-dol-blue"
                 )}
               >
@@ -224,7 +224,7 @@ export const LogSection = ({
                 title="Next Page"
                 className={twMerge(
                   "bg-transparent duration-500",
-                  isLastPage ? "text-gray-medium" : "text-dol-white",
+                  isLastPage ? "text-gray-medium" : "text-dol-light",
                   isLastPage ? "" : "hover:bg-dol-blue"
                 )}
               >
@@ -236,7 +236,7 @@ export const LogSection = ({
                 title="Last Page"
                 className={twMerge(
                   "bg-transparent duration-500",
-                  isLastPage ? "text-gray-medium" : "text-dol-white",
+                  isLastPage ? "text-gray-medium" : "text-dol-light",
                   isLastPage ? "" : "hover:bg-dol-blue"
                 )}
               >

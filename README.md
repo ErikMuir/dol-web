@@ -65,6 +65,7 @@ npm run test:watch
 - `/api/setlists/[dateOrSlug]/[position]` - GET
 - `/api/shows` - GET
 - `/api/shows/[date]` - GET
+- `/api/songs` - GET
 - `/api/songs/[songId]` - GET
 - `/api/tracks/[date]` - GET
 - `/api/tracks/[date]/[position]` - GET

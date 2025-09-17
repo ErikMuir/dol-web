@@ -17,7 +17,7 @@ export default function DukesLog(): React.ReactElement {
       <button
         type="button"
         className={twMerge(
-          "bg-dol-black rounded-full px-4 py-1",
+          "bg-dol-dark rounded-full px-4 py-1",
           "px-4 py-1",
           "text-lg text-dol-yellow",
           "hover:bg-gray-extra-dark transition duration-500 ease-in-out"

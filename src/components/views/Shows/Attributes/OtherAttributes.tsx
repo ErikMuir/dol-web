@@ -1,7 +1,7 @@
 import { Setlist, Song } from "@erikmuir/dol-lib/types";
 import { TextAttribute } from "../AttributeTypes/TextAttribute";
 
-export type StaticAttributesProps = {
+export type OtherAttributesProps = {
   setlist?: Setlist;
   setlistLoading?: boolean;
   formattedSetlist?: string;
@@ -10,14 +10,14 @@ export type StaticAttributesProps = {
   songLoading?: boolean;
 };
 
-export const StaticAttributes = ({
+export const OtherAttributes = ({
   setlist,
   setlistLoading,
   formattedSetlist,
   setlistsLoading,
   song,
   songLoading,
-}: StaticAttributesProps): React.ReactNode => {
+}: OtherAttributesProps): React.ReactNode => {
   return (
     <div className="flex flex-wrap justify-center gap-2 items-center w-full max-w-[640px] mx-auto">
       <TextAttribute

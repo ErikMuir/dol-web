@@ -39,7 +39,7 @@ export default async function RootLayout({
       <body
         className={twMerge(
           jost.className,
-          "antialiased text-dol-white bg-dol-black tracking",
+          "antialiased text-dol-light bg-dol-dark tracking",
           "flex flex-col min-h-screen",
           "relative"
         )}

@@ -44,12 +44,8 @@ export const Song = (): React.ReactElement => {
       >
         <div className={twMerge("w-1 rounded-full", eraBgColor)} />
         <div className="flex flex-col items-center grow text-center text-balance">
-          <div className="text-lg">
-            {toFriendlyDate(showDate)}
-          </div>
-          <div className="text-sm">
-            {venue}, {getVenueLocation(city, state, country)}
-          </div>
+          <div className="text-lg">{toFriendlyDate(showDate)}</div>
+          <div className="text-sm">{venue}, {getVenueLocation(city, state, country)}</div>
           <MintStatusIndicator date={showDate} position={position} className="mt-2" />
         </div>
         <div className="w-1"></div>
@@ -59,11 +55,10 @@ export const Song = (): React.ReactElement => {
 
   return (
     <div className={twMerge(
-      "w-[320px] md:w-[500px]",
-      "mt-4 mx-auto",
-      "flex flex-col items-center",
+      "w-[320px] md:w-[500px] mx-auto",
+      "flex flex-col items-center gap-6",
       )}>
-      <div className="mb-6">
+      <div>
         <div className="text-center text-3xl text-balance">
           {setlists[0].song}
         </div>

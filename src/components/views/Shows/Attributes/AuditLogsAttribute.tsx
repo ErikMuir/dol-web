@@ -29,7 +29,7 @@ export const AuditLogsAttribute = ({
     }
   }, [setlist]);
 
-  const header = "uppercase bg-dol-black sticky top-0 bg-[#1a2a41]";
+  const header = "uppercase bg-dol-dark sticky top-0 bg-[#1a2a41]";
   const row = "px-2 py-2 text-xs";
   const border = "border-b border-gray-dark-2";
   const monospace = "font-mono";

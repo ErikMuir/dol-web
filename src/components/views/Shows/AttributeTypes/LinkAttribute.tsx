@@ -35,7 +35,7 @@ export const LinkAttribute = ({
 
     if (href.startsWith("/")) {
       return (
-        <Link href={href} className={twMerge(linkStyles, "bg-dol-white")}>
+        <Link href={href} className={twMerge(linkStyles, "bg-dol-light")}>
           <Image
             src="/logo.png"
             width={12}

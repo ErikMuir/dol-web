@@ -1,5 +1,25 @@
 import "dotenv/config";
 
+////////////////////////////////////////////////////////////
+// TODO : Move this stuff to dol-lib
+
+const trueValues = ["true", "1", "yes", "y"];
+const falseValues = ["false", "0", "no", "n", ""];
+const standardValues = [...trueValues, ...falseValues];
+
+export const envToBoolean = (value: string = "0", strict = false) => {
+  const formattedValue = value.trim().toLowerCase();
+  if (standardValues.includes(formattedValue)) {
+    return trueValues.includes(formattedValue);
+  }
+  if (strict) {
+    throw new Error(`Invalid boolean value in strict mode: ${value}`);
+  }
+  return Boolean(formattedValue);
+};
+
+////////////////////////////////////////////////////////////
+
 export const AWS_ACCESS_KEY_ID = `${process.env.AWS_ACCESS_KEY_ID}`;
 export const AWS_REGION = `${process.env.AWS_REGION}`;
 export const AWS_SECRET_ACCESS_KEY = `${process.env.AWS_SECRET_ACCESS_KEY}`;
@@ -9,7 +29,7 @@ export const NEXT_PUBLIC_API_TOKEN = `${process.env.NEXT_PUBLIC_API_TOKEN}`;
 export const NEXT_PUBLIC_APP_URL = `${process.env.NEXT_PUBLIC_APP_URL}`;
 export const NEXT_PUBLIC_HFB_COLLECTION_ID = `${process.env.NEXT_PUBLIC_HFB_COLLECTION_ID}`;
 export const NEXT_PUBLIC_HFB_HBAR_PRICE = `${process.env.NEXT_PUBLIC_HFB_HBAR_PRICE}`;
-export const NEXT_PUBLIC_MINT_ENABLED = `${process.env.NEXT_PUBLIC_MINT_ENABLED}`;
+export const NEXT_PUBLIC_MINT_ENABLED = envToBoolean(process.env.NEXT_PUBLIC_MINT_ENABLED);
 export const NEXT_PUBLIC_MIRROR_NODE_URL = `${process.env.NEXT_PUBLIC_MIRROR_NODE_URL}`;
 export const NEXT_PUBLIC_NETWORK = `${process.env.NEXT_PUBLIC_NETWORK}`;
 export const NEXT_PUBLIC_PROJECT_ID = `${process.env.NEXT_PUBLIC_PROJECT_ID}`;

@@ -51,7 +51,7 @@ export const Modal = ({
         }}
       >
         <div className="modal-wrapper">
-          <div className="modal relative mx-8 p-4 rounded-xl bg-dol-black z-10 shadow-md">
+          <div className="modal relative mx-8 p-4 rounded-xl bg-dol-dark z-10 shadow-md">
             {showClose && (
               <button
                 type="button"
@@ -59,7 +59,7 @@ export const Modal = ({
                   "absolute top-0 right-0",
                   "flex items-center",
                   "m-2 p-2 rounded-full",
-                  "text-gray-medium bg-dol-black",
+                  "text-gray-medium bg-dol-dark",
                   "hover:text-gray-light hover:bg-gray-dark duration-500",
                 )}
                 onClick={handleCloseClick}

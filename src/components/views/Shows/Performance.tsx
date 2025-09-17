@@ -29,15 +29,16 @@ import {
   getSetText,
 } from "@erikmuir/dol-lib/common/dapp";
 import { Loading } from "@/components/common/Loading";
+import { MintStatusIndicator } from "@/components/common/MintStatusIndicator";
 import {
   AuditLogsAttribute,
   DynamicAttributes,
   FixedAttributes,
   ImageAttributes,
   SectionHeader,
-  StaticAttributes,
+  OtherAttributes,
 } from "@/components/views/Shows/Attributes";
-import { openWalletConnectModal } from "@/wallet";
+import { NEXT_PUBLIC_MINT_ENABLED as mintEnabled } from "@/env";
 import {
   useIsTokenAssociated,
   useNftMetadata,
@@ -48,10 +49,12 @@ import {
   useTrack,
   useWalletInterface,
 } from "@/hooks";
-import { NFTPlaceholder } from "./NFTPlaceholder";
 import { fetchStandardJson } from "@/utils";
+import { openWalletConnectModal } from "@/wallet";
+import { NFTPlaceholder } from "./NFTPlaceholder";
+import { PageNote } from "@/components/common/PageNote";
 
-const { hfbCollectionId, mintEnabled, hfbHbarPrice } = getDappConfig();
+const { hfbCollectionId, hfbHbarPrice } = getDappConfig();
 
 export const Performance = (): React.ReactNode => {
   const pathname = usePathname();
@@ -474,9 +477,39 @@ export const Performance = (): React.ReactNode => {
 
   const showAuditLogs = false;
 
+  const getPageNote = () => {
+    if (!mintEnabled) return <PageNote color="dol-red" className="text-center">Public minting is currently disabled.</PageNote>;
+    if (!performance) return null;
+    if (performance?.serial) return null;
+    if (performance?.lockedUntil && performance.lockedUntil > Date.now()) return null;
+
+    const getAttributeTypeLabel = (text: string, className?: string) => <span className={twMerge("font-bold", className)}>{text}</span>;
+
+    const customizable = getAttributeTypeLabel("Customizable", "text-dol-yellow");
+    const fixed = getAttributeTypeLabel("Fixed", "text-dol-blue");
+    const dynamic = getAttributeTypeLabel("Dynamic", "text-dol-green");
+    const other = getAttributeTypeLabel("Other", "text-gray-medium");
+
+    return (
+      <div className="text-justify">
+        Feel free to modify or randomize the {customizable} attributes to your liking! When you mint,{" "}
+        they&apos;ll be written to the NFT&apos;s metadata, along with the {fixed} attributes — <em>{" "}
+        including the MP3 link!</em> ({dynamic} and {other} attributes will not be included in the{" "}
+        metadata, but can still be viewed on this page.)
+      </div>
+    );
+  };
+
   return (
-    <div className="w-[320px] md:w-[500px] lg:w-[680px] mt-14 mx-auto flex flex-col">
-      <div className="flex flex-col items-center justify-center gap-6 w-full">
+    <div className="w-[320px] md:w-[500px] lg:w-[680px] mt-4 mx-auto flex flex-col">
+      <div className="flex flex-col items-center gap-4 w-full">
+        {getPageNote()}
+        <MintStatusIndicator
+          date={date}
+          position={parsedPosition}
+          performance={performance}
+          className="justify-center text-md"
+        />
         {getImage()}
         {getMintButton()}
         {getStatusText()}
@@ -528,12 +561,12 @@ export const Performance = (): React.ReactNode => {
       <DynamicAttributes song={song} songLoading={songLoading} />
 
       <SectionHeader
-        text="Static Attributes"
+        text="Other Attributes"
         borderClass="border-gray-medium"
         backgroundClass="bg-gray-dark/75"
       />
 
-      <StaticAttributes
+      <OtherAttributes
         setlist={setlist}
         setlistLoading={setlistLoading}
         formattedSetlist={formattedSetlist}
@@ -546,7 +579,7 @@ export const Performance = (): React.ReactNode => {
         <SectionHeader
           text="Audit Logs"
           borderClass="border-gray-medium"
-          backgroundClass="bg-dol-black"
+          backgroundClass="bg-dol-dark"
         />
       )}
 

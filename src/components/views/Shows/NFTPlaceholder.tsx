@@ -38,7 +38,7 @@ export const NFTPlaceholder = ({
           "p-1 text-center bg-gray-dark/75"
         )}
       >
-        <div className="text-dol-white text-balance">{song}</div>
+        <div className="text-dol-light text-balance">{song}</div>
         <div className="text-dol-yellow text-[10px] tracking-wider">
           {performanceId}
         </div>

@@ -39,7 +39,7 @@ export const Wallet = () => {
               className={twMerge(
                 "bg-dol-green/50 hover:bg-dol-green/75 duration-500",
                 "p-2 rounded w-full",
-                "text-dol-white text-center uppercase tracking-wide text-xs"
+                "text-dol-light text-center uppercase tracking-wide text-xs"
               )}
               onClick={() => {
                 openWalletConnectModal();
@@ -55,7 +55,7 @@ export const Wallet = () => {
               className={twMerge(
                 "bg-dol-red/50 hover:bg-dol-red/75 duration-500",
                 "p-2 rounded w-full",
-                "text-dol-white text-center uppercase tracking-wide text-xs"
+                "text-dol-light text-center uppercase tracking-wide text-xs"
               )}
               onClick={() => {
                 walletInterface?.disconnect();
@@ -71,7 +71,7 @@ export const Wallet = () => {
             className={twMerge(
               "bg-dol-blue/50 hover:bg-dol-blue/75 duration-500",
               "p-2 rounded w-full",
-              "text-dol-white text-center uppercase tracking-wide text-xs",
+              "text-dol-light text-center uppercase tracking-wide text-xs",
               "flex justify-center gap-2"
             )}
           >
@@ -95,7 +95,7 @@ export const Wallet = () => {
               "bg-transparent hover:bg-gray-dark-2 duration-500",
               "border border-gray-dark-2",
               "p-2 rounded w-full",
-              "text-dol-white text-center uppercase tracking-wide text-xs"
+              "text-dol-light text-center uppercase tracking-wide text-xs"
             )}
             onClick={() => setOpen(false)}
           >

@@ -41,7 +41,7 @@ export type FeatureProps = {
 };
 
 export const Feature = ({
-  twTextColor = "text-dol-white",
+  twTextColor = "text-dol-light",
   title,
   content,
 }: FeatureProps): React.ReactElement => {

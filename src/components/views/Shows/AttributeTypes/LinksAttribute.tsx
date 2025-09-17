@@ -40,7 +40,7 @@ export const LinksAttribute = ({
           <a
             target="_blank"
             href={dolLink}
-            className={twMerge(linkStyles, "bg-dol-white")}
+            className={twMerge(linkStyles, "bg-dol-light")}
           >
             <Image
               src={`/logo.png`}

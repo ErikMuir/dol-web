@@ -65,7 +65,7 @@ export const DropDownAttribute = ({
         <select
           id={id}
           className={twMerge(
-            "border rounded p-1 text-sm text-dol-black",
+            "border rounded p-1 text-sm text-dol-dark",
             loading || disabled ? "bg-gray-medium" : ""
           )}
           onChange={(e) => onChange(e.target.value)}

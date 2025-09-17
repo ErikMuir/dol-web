@@ -7,7 +7,7 @@ export const Heading = (): React.ReactElement => {
         <div className=" uppercase tracking-[4px]">of</div>
         <div className="text-4xl uppercase tracking-[4px]">Lizards</div>
       </div>
-      <div className="w-20 my-4 border-b border-dol-white mx-auto"></div>
+      <div className="w-20 my-4 border-b border-dol-light mx-auto"></div>
       <div className="text-xl">A Most Glorious Collection</div>
     </div>
   );
