@@ -23,7 +23,7 @@ export const FilterTypePicker = ({
   );
   return (
     <div className={twMerge(
-      "w-72 mx-auto",
+      "w-72 mx-auto z-10",
       "flex items-center",
       "rounded-full bg-gray-dark shadow-lg",
     )}>

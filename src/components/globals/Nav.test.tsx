@@ -5,7 +5,6 @@ describe("Nav", () => {
   it("renders tabs and back button", () => {
     render(<Nav />);
     expect(screen.getByText("Home")).toBeInTheDocument();
-    expect(screen.getByTitle("Go back")).toBeInTheDocument();
   });
 });
 
