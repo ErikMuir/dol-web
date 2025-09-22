@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { twMerge } from "tailwind-merge";
 import { DolPerformance } from "@erikmuir/dol-lib/types";
 import { usePerformance } from "@/hooks";
-import { Loading } from "./Loading";
+import { AnimatedDonut } from "./AnimatedDonut";
 
 export enum MintStatusIndicatorType {
   Emoji = "Emoji",
@@ -62,8 +62,6 @@ export const MintStatusIndicator = ({
     return () => observer.disconnect();
   }, [providedPerformance, shouldFetch]);
 
-  const Spinner = () => <span className="relative -left-3"><Loading sizeInPixels={16} /></span>;
-
   const notFound = Boolean(!coalescedPerformance);
   const isMinted = Boolean(coalescedPerformance?.serial);
   const isLocked = Boolean(coalescedPerformance?.lockedUntil && coalescedPerformance.lockedUntil > Date.now());
@@ -79,7 +77,7 @@ export const MintStatusIndicator = ({
     : isLocked ? "Locked"
     : "Available";
 
-  const emoji = performanceLoading ? <Spinner />
+  const emoji = performanceLoading ? <AnimatedDonut sizeInPixels={16} />
     : notFound ? "❓"
     : isMinted ? "🔴"
     : isLocked ? "🟡"

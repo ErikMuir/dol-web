@@ -43,7 +43,7 @@ export const Header = () => {
           <Wallet />
         </div>
       </div>
-      <div className="px-2 pt-2 pb-7"><Nav /></div>
+      <div className="px-2 pt-2 pb-8"><Nav /></div>
     </header>
   );
 };

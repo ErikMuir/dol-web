@@ -17,7 +17,7 @@ export const Location = ({
   jumpTo,
 }: LocationProps): React.ReactElement => {
   return (
-    <div className="w-80 mx-auto flex flex-col items-center justify-center">
+    <div className="w-80 w-[320px] md:w-[500px] mx-auto flex flex-col items-center justify-center">
       <div className="text-2xl text-dol-yellow pb-4 text-center">
         {sanitizeText(name)}
       </div>
@@ -27,17 +27,17 @@ export const Location = ({
             key={target}
             onClick={() => jumpTo(locationType, target)}
             className={twMerge(
-              "py-1 px-2 w-full",
+              "py-4 px-2 w-full",
               "cursor-pointer hover:bg-gray-dark",
               "border-t border-gray-dark last:border-b",
               "flex items-center justify-between"
             )}
           >
-            <div>{sanitizeText(target)}</div>
+            <div className="text-2xl">{sanitizeText(target)}</div>
             <ItemCountPill
               item="show"
               count={showCount}
-              twSize="xs"
+              twSize="sm"
               seed={index}
             />
           </div>

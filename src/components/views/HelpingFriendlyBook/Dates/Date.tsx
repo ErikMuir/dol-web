@@ -32,7 +32,7 @@ export const Date = ({
   jumpTo,
 }: DateProps): React.ReactElement => {
   return (
-    <div className="w-80 mx-auto flex flex-col items-center justify-center">
+    <div className="w-80 w-[320px] md:w-[500px] mx-auto flex flex-col items-center justify-center">
       <div className="text-2xl text-dol-yellow pb-4 text-center">
         {sanitizeText(name)}
       </div>
@@ -43,14 +43,14 @@ export const Date = ({
             key={target}
             onClick={() => jumpTo(dateType, target)}
             className={twMerge(
-              "py-1 px-2 w-full",
+              "py-4 px-2 w-full",
               "cursor-pointer hover:bg-gray-dark",
               "border-t border-gray-dark last:border-b",
               "flex items-center justify-between"
             )}
           >
             <div className="flex items-center gap-4">
-              <div className="">{sanitizeText(targetText)}</div>
+              <div className="text-2xl">{sanitizeText(targetText)}</div>
               {dateType === "era" && (
                 <div className="text-xs text-gray-medium">
                   {getEraText(target)}
@@ -61,7 +61,7 @@ export const Date = ({
               <ItemCountPill
                 item="show"
                 count={showCount}
-                twSize="xs"
+                twSize="sm"
                 seed={index}
               />
             </div>
