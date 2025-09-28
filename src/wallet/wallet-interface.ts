@@ -1,7 +1,7 @@
 import { NftId, TokenId, TransferTransaction } from "@hashgraph/sdk";
 
 export interface WalletInterface {
-  associateToken: (tokenId: TokenId) => Promise<boolean>;
+  associateToken: (tokenId: TokenId | string) => Promise<boolean>;
   purchaseNft: (
     transaction: TransferTransaction,
     nftId: NftId,

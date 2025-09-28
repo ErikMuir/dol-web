@@ -240,9 +240,7 @@ export const Performance = (): React.ReactNode => {
   };
 
   const handleAssociateClick = async () => {
-    const success = await walletInterface?.associateToken(
-      TokenId.fromString(hfbCollectionId)
-    );
+    const success = await walletInterface?.associateToken(hfbCollectionId);
     if (success) {
       mutateIsAssociated(true);
     }

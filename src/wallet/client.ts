@@ -27,7 +27,7 @@ import { ActionContext } from "@erikmuir/dol-lib/types";
 // Reference usage from walletconnect implementation https://github.com/hashgraph/hedera-wallet-connect/blob/main/src/lib/dapp/index.ts#L120C1-L124C9
 const refreshEvent = new EventEmitter();
 
-const { name, description, url, icons, network, projectId } = getDappConfig();
+const { name, description, url, icons, network, projectId, hfbCollectionId } = getDappConfig();
 
 const dappConnector = new DAppConnector(
   { name, description, url, icons },
@@ -87,7 +87,7 @@ class WalletConnectWallet implements WalletInterface {
     return AccountId.fromString(this.getSigner().getAccountId().toString());
   }
 
-  async associateToken(tokenId: TokenId) {
+  async associateToken(tokenId: TokenId | string = hfbCollectionId) {
     const associateTokenTransaction = new TokenAssociateTransaction()
       .setAccountId(this.getAccountId())
       .setTokenIds([tokenId]);
