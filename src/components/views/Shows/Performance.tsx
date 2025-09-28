@@ -38,7 +38,7 @@ import {
   SectionHeader,
   OtherAttributes,
 } from "@/components/views/Shows/Attributes";
-import { isWhiteListed, isMintEnabled } from "@/env";
+import { isWhiteList, mintEnabled } from "@/env";
 import {
   useIsTokenAssociated,
   useNftMetadata,
@@ -88,7 +88,7 @@ export const Performance = (): React.ReactNode => {
   const { isAssociated, isAssociatedLoading, mutateIsAssociated } =
     useIsTokenAssociated(hfbCollectionId, accountId);
 
-  const isWhiteList = isWhiteListed(accountId);
+  const whiteList = isWhiteList(accountId);
 
   // useEffect(() => {
   //   randomizeAttributes();
@@ -430,7 +430,7 @@ export const Performance = (): React.ReactNode => {
         </button>
       );
     }
-    if (!isMintEnabled && !isWhiteList) {
+    if (!mintEnabled && !whiteList) {
       return (
         <button type="button" className={buttonGray} disabled>
           Public Mint: TBA
@@ -438,7 +438,7 @@ export const Performance = (): React.ReactNode => {
       );
     }
     const disabled =
-      (!isMintEnabled && !isWhiteList) ||
+      (!mintEnabled && !whiteList) ||
       !Boolean(performance) ||
       [
         MintStatus.AcquiringLock,
@@ -482,7 +482,7 @@ export const Performance = (): React.ReactNode => {
       return null;
     }
 
-    if (!isMintEnabled && !isWhiteList) return (
+    if (!mintEnabled && !whiteList) return (
       <PageNote color="dol-red" className="text-center">Public minting is currently disabled.</PageNote>
     );
 
@@ -495,7 +495,7 @@ export const Performance = (): React.ReactNode => {
 
     return (
       <>
-        {!isMintEnabled && isWhiteList && <PageNote color="dol-green" className="text-center">Public minting is currently disabled, but you&apos;re on the ALLOW list!</PageNote>}
+        {!mintEnabled && whiteList && <PageNote color="dol-green" className="text-center">Public minting is currently disabled, but you&apos;re on the ALLOW list!</PageNote>}
         <div className="text-justify">
           Feel free to modify or randomize the {customizable} attributes to your liking! When you mint,{" "}
           they&apos;ll be written to the NFT&apos;s metadata on chain, along with the {fixed} attributes{" "}

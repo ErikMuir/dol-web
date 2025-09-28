@@ -37,7 +37,7 @@ export const Modal = ({
     <div
       id={`${id}-modal`}
       className={twMerge(
-        "modal-overlay z-20",
+        "modal-overlay",
         "fixed top-0 left-0",
         "w-full h-full overflow-x-hidden",
         "flex justify-center items-center",
@@ -51,7 +51,7 @@ export const Modal = ({
         }}
       >
         <div className="modal-wrapper">
-          <div className="modal relative mx-8 p-4 rounded-xl bg-dol-dark z-10 shadow-md">
+          <div className="modal relative mx-8 p-4 rounded-xl bg-dol-dark shadow-md">
             {showClose && (
               <button
                 type="button"

@@ -18,9 +18,7 @@ export const envToBoolean = (value: string = "0", strict = false) => {
   return Boolean(formattedValue);
 };
 
-export const isMintEnabled = () => envToBoolean(NEXT_PUBLIC_MINT_ENABLED);
-
-export const isWhiteListed = (accountId: string | null): boolean =>
+export const isWhiteList = (accountId: string | null): boolean =>
   accountId ? NEXT_PUBLIC_WHITE_LIST.split(",").includes(accountId) : false;
 
 ////////////////////////////////////////////////////////////
@@ -45,3 +43,5 @@ export const PINATA_GATEWAY = `${process.env.PINATA_GATEWAY}`;
 export const PINATA_HFB_GROUP_ID = `${process.env.PINATA_HFB_GROUP_ID}`;
 export const PINATA_JWT = `${process.env.PINATA_JWT}`;
 export const TREASURY_KEY = `${process.env.TREASURY_KEY}`;
+
+export const mintEnabled = envToBoolean(NEXT_PUBLIC_MINT_ENABLED);

@@ -26,6 +26,7 @@ export const Header = () => {
       className={twMerge(
         "fixed top-0 w-full bg-gray-extra-dark",
         "border-b border-gray-dark-2 shadow-lg",
+        "z-10",
       )}
     >
       <div className="flex flex-wrap items-center justify-between p-2">
