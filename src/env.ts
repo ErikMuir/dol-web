@@ -18,6 +18,11 @@ export const envToBoolean = (value: string = "0", strict = false) => {
   return Boolean(formattedValue);
 };
 
+export const isMintEnabled = () => envToBoolean(NEXT_PUBLIC_MINT_ENABLED);
+
+export const isWhiteListed = (accountId: string | null): boolean =>
+  accountId ? NEXT_PUBLIC_WHITE_LIST.split(",").includes(accountId) : false;
+
 ////////////////////////////////////////////////////////////
 
 export const AWS_ACCESS_KEY_ID = `${process.env.AWS_ACCESS_KEY_ID}`;
@@ -29,11 +34,12 @@ export const NEXT_PUBLIC_API_TOKEN = `${process.env.NEXT_PUBLIC_API_TOKEN}`;
 export const NEXT_PUBLIC_APP_URL = `${process.env.NEXT_PUBLIC_APP_URL}`;
 export const NEXT_PUBLIC_HFB_COLLECTION_ID = `${process.env.NEXT_PUBLIC_HFB_COLLECTION_ID}`;
 export const NEXT_PUBLIC_HFB_HBAR_PRICE = `${process.env.NEXT_PUBLIC_HFB_HBAR_PRICE}`;
-export const NEXT_PUBLIC_MINT_ENABLED = envToBoolean(process.env.NEXT_PUBLIC_MINT_ENABLED);
+export const NEXT_PUBLIC_MINT_ENABLED = `${process.env.NEXT_PUBLIC_MINT_ENABLED}`;
 export const NEXT_PUBLIC_MIRROR_NODE_URL = `${process.env.NEXT_PUBLIC_MIRROR_NODE_URL}`;
 export const NEXT_PUBLIC_NETWORK = `${process.env.NEXT_PUBLIC_NETWORK}`;
 export const NEXT_PUBLIC_PROJECT_ID = `${process.env.NEXT_PUBLIC_PROJECT_ID}`;
 export const NEXT_PUBLIC_TREASURY_ACCOUNT = `${process.env.NEXT_PUBLIC_TREASURY_ACCOUNT}`;
+export const NEXT_PUBLIC_WHITE_LIST = `${process.env.NEXT_PUBLIC_WHITE_LIST}`;
 export const PHISH_NET_API_KEY = `${process.env.PHISH_NET_API_KEY}`;
 export const PINATA_GATEWAY = `${process.env.PINATA_GATEWAY}`;
 export const PINATA_HFB_GROUP_ID = `${process.env.PINATA_HFB_GROUP_ID}`;

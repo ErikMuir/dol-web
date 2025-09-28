@@ -6,7 +6,8 @@ import {
   setSerial,
   setPurchaseDetails,
 } from "@erikmuir/dol-lib/server/dynamo";
-import { StandardPayload, success } from "@/utils";
+import { isWhiteListed, isMintEnabled } from "@/env";
+import { badRequest, StandardPayload, success } from "@/utils";
 
 // /api/mint/[accountId]/[showDate]/[position]/[serial] (post-transfer endpoint)
 
@@ -22,6 +23,11 @@ export async function POST(
   { params }: { params: Promise<PostTransferParams> }
 ): Promise<NextResponse<StandardPayload<boolean | string>>> {
   const { accountId, showDate, position, serial } = await params;
+
+  if (!isMintEnabled && !isWhiteListed(accountId)) {
+    return badRequest("Minting is disabled");
+  }
+
   const { hfbCollectionId } = getDappConfig();
   const parsedPosition = parseInt(position, 10);
   const parsedSerial = parseInt(serial, 10);

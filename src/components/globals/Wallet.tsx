@@ -26,12 +26,12 @@ export const Wallet = () => {
   }, [walletInterface]);
 
   const handleAssociateClick = useCallback(async () => {
-    var success = await walletInterface?.associateToken(hfbCollectionId);
+    const success = await walletInterface?.associateToken(hfbCollectionId);
     if (success) {
       mutateIsAssociated(true);
     }
     setOpen(false);
-  }, [walletInterface, mutateIsAssociated]);
+  }, [walletInterface, mutateIsAssociated, hfbCollectionId]);
 
   const handleLinkClick = useCallback(() => {
     setOpen(false);

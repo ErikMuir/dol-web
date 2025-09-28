@@ -7,6 +7,7 @@ import {
 import { getDappConfig } from "@erikmuir/dol-lib/common/dapp";
 import { getHederaClient } from "@erikmuir/dol-lib/server/blockchain";
 import { obtainLock } from "@erikmuir/dol-lib/server/dapp";
+import { isWhiteListed, isMintEnabled } from "@/env";
 import { badRequest, StandardPayload, success } from "@/utils";
 
 // /api/mint/[accountId]/[showDate]/[position] (pre-transfer endpoint)
@@ -27,6 +28,10 @@ export async function POST(
   { params }: { params: Promise<PreTransferParams> }
 ): Promise<NextResponse<StandardPayload<ServerPreTransferResponse | string>>> {
   const { showDate, position, accountId } = await params;
+
+  if (!isMintEnabled && !isWhiteListed(accountId)) {
+    return badRequest("Minting is disabled");
+  }
 
   const attributes: PerformanceAttributes = await req.json();
   if (!attributes) {

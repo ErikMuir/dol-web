@@ -38,7 +38,7 @@ import {
   SectionHeader,
   OtherAttributes,
 } from "@/components/views/Shows/Attributes";
-import { NEXT_PUBLIC_MINT_ENABLED as mintEnabled } from "@/env";
+import { isWhiteListed, isMintEnabled } from "@/env";
 import {
   useIsTokenAssociated,
   useNftMetadata,
@@ -87,6 +87,8 @@ export const Performance = (): React.ReactNode => {
   const { accountId, walletInterface } = useWalletInterface();
   const { isAssociated, isAssociatedLoading, mutateIsAssociated } =
     useIsTokenAssociated(hfbCollectionId, accountId);
+
+  const isWhiteList = isWhiteListed(accountId);
 
   // useEffect(() => {
   //   randomizeAttributes();
@@ -428,7 +430,7 @@ export const Performance = (): React.ReactNode => {
         </button>
       );
     }
-    if (!mintEnabled) {
+    if (!isMintEnabled && !isWhiteList) {
       return (
         <button type="button" className={buttonGray} disabled>
           Public Mint: TBA
@@ -436,7 +438,7 @@ export const Performance = (): React.ReactNode => {
       );
     }
     const disabled =
-      !mintEnabled ||
+      (!isMintEnabled && !isWhiteList) ||
       !Boolean(performance) ||
       [
         MintStatus.AcquiringLock,
@@ -476,10 +478,13 @@ export const Performance = (): React.ReactNode => {
   const showAuditLogs = false;
 
   const getPageNote = () => {
-    if (!mintEnabled) return <PageNote color="dol-red" className="text-center">Public minting is currently disabled.</PageNote>;
-    if (!performance) return null;
-    if (performance?.serial) return null;
-    if (performance?.lockedUntil && performance.lockedUntil > Date.now()) return null;
+    if (!performance || performance?.serial || (performance?.lockedUntil && performance.lockedUntil > Date.now())) {
+      return null;
+    }
+
+    if (!isMintEnabled && !isWhiteList) return (
+      <PageNote color="dol-red" className="text-center">Public minting is currently disabled.</PageNote>
+    );
 
     const getAttributeTypeLabel = (text: string, className?: string) => <span className={twMerge("font-bold", className)}>{text}</span>;
 
@@ -489,12 +494,15 @@ export const Performance = (): React.ReactNode => {
     const other = getAttributeTypeLabel("Other", "text-gray-medium");
 
     return (
-      <div className="text-justify">
-        Feel free to modify or randomize the {customizable} attributes to your liking! When you mint,{" "}
-        they&apos;ll be written to the NFT&apos;s metadata, along with the {fixed} attributes — <em>{" "}
-        including the MP3 link!</em> ({dynamic} and {other} attributes will not be included in the{" "}
-        metadata, but can still be viewed on this page.)
-      </div>
+      <>
+        {!isMintEnabled && isWhiteList && <PageNote color="dol-green" className="text-center">Public minting is currently disabled, but you&apos;re on the ALLOW list!</PageNote>}
+        <div className="text-justify">
+          Feel free to modify or randomize the {customizable} attributes to your liking! When you mint,{" "}
+          they&apos;ll be written to the NFT&apos;s metadata on chain, along with the {fixed} attributes{" "}
+          — <em>including the MP3 link!</em> ({dynamic} and {other} attributes will not be written on chain,{" "}
+          but can still be viewed on this page.)
+        </div>
+      </>
     );
   };
 
