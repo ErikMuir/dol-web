@@ -63,7 +63,7 @@ export const Wallet = () => {
           )}
           <DolButton color="blue" href="/terms-of-service" onClick={handleLinkClick}>Terms of Service</DolButton>
           <DolButton color="yellow" href="/privacy-policy" onClick={handleLinkClick}>Privacy Policy</DolButton>
-          <DolButton color="dark" onClick={handleCancelClick}>Cancel</DolButton>
+          <DolButton color="gray" outline onClick={handleCancelClick}>Cancel</DolButton>
         </div>
       </Modal>
     </div>

@@ -7,6 +7,7 @@ export interface DolButtonProps {
   color?: DolColorExtended;
   href?: string;
   roundedFull?: boolean;
+  outline?: boolean;
   className?: string;
   onClick?: () => void;
   children?: React.ReactNode;
@@ -17,50 +18,87 @@ export const DolButton = ({
   color = "gray",
   href,
   roundedFull = false,
-  className,
+  outline = false,
+  className = "",
   onClick,
   children
 }: DolButtonProps) => {
-
-  className = twMerge(
-    getSizeClasses(size),
-    getColorClasses(color),
-    roundedFull ? "rounded-full" : "rounded",
-    "duration-500 w-full text-center uppercase px-4",
-    className);
-
+  const mergedClassName = buildClassName(size, roundedFull, color, outline, className);
   return href
-    ? <Link href={href} className={className} onClick={onClick}>{children}</Link>
-    : <button type="button" className={className} onClick={onClick}>{children}</button>;
+    ? <Link href={href} className={mergedClassName} onClick={onClick}>{children}</Link>
+    : <button type="button" className={mergedClassName} onClick={onClick}>{children}</button>;
 };
 
-function getColorClasses(color: DolColorExtended): string {
+function buildClassName(
+  size: DolSize,
+  roundedFull: boolean,
+  color: DolColorExtended,
+  outline: boolean,
+  className: string) {
+
+  let backgroundColor = "";
+  let backgroundHoverColor = "";
+  let borderColor = "";
+
   switch (color) {
     case "blue":
+      backgroundColor = "bg-dol-blue/50";
+      backgroundHoverColor = "hover:bg-dol-blue/75";
+      borderColor = "border-dol-blue";
+      break;
     case "green":
+      backgroundColor = "bg-dol-green/50";
+      backgroundHoverColor = "hover:bg-dol-green/75";
+      borderColor = "border-dol-green";
+      break;
     case "red":
+      backgroundColor = "bg-dol-red/50";
+      backgroundHoverColor = "hover:bg-dol-red/75";
+      borderColor = "border-dol-red";
+      break;
     case "yellow":
-      return twMerge(`hover:text-white bg-dol-${color}/50 hover:bg-dol-${color}/75`);
+      backgroundColor = "bg-dol-yellow/50";
+      backgroundHoverColor = "hover:bg-dol-yellow/75";
+      borderColor = "border-dol-yellow";
+      break;
     case "dark":
-      return twMerge(`hover:text-white bg-dol-dark/50 hover:bg-dol-light/10 border border-gray-dark-2`);
+      backgroundColor = "bg-dol-dark/50";
+      backgroundHoverColor = "hover:bg-dol-dark/75";
+      borderColor = "border-dol-dark";
+      break;
     case "light":
-      return twMerge(`hover:text-dol-dark/50 bg-dol-light/50 hover:bg-dol-light`);
-    case "gray":
-      return twMerge(`hover:text-white bg-gray-medium/25 hover:bg-gray-medium/50`);
+      backgroundColor = "bg-dol-light/50";
+      backgroundHoverColor = "hover:bg-dol-light/75";
+      borderColor = "border-dol-light";
+      break;
     default:
-      return "";
+      backgroundColor = "bg-gray-medium/25";
+      backgroundHoverColor = "hover:bg-gray-medium";
+      borderColor = "border-gray-medium";
+      break;
   }
-}
 
-function getSizeClasses(size: DolSize): string {
+  let sizeClasses = "";
+
   switch (size) {
-    case "sm":
-      return twMerge("text-xs py-1 tracking-wide");
-    case "md":
-      return twMerge("text-xs py-2 tracking-wider");
-    case "lg":
-      return twMerge("text-lg py-3 tracking-widest");
-    default:
-      return "";
+    case "sm": sizeClasses = "text-xs py-1 tracking-wide"; break;
+    case "md": sizeClasses = "text-xs py-2 tracking-wider"; break;
+    case "lg": sizeClasses = "text-lg py-3 tracking-widest"; break;
+    default: sizeClasses = ""; break;
   }
+
+  return twMerge(
+    sizeClasses,
+    "w-full px-4",
+    roundedFull ? "rounded-full" : "rounded",
+    color === "light"
+      ? "text-dol-dark/50 hover:text-dol-dark"
+      : "text-dol-light hover:text-white",
+    "text-center uppercase",
+    outline ? "bg-transparent" : backgroundColor,
+    backgroundHoverColor,
+    "duration-500",
+    outline ? `border ${borderColor}` : "",
+    className
+  );
 }
