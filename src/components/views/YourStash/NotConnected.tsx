@@ -1,5 +1,5 @@
-import { twMerge } from "tailwind-merge";
 import { openWalletConnectModal } from "@/wallet";
+import { DolButton } from "@/components/common/DolButton";
 
 export const NotConnected = (): React.ReactNode => (
   <div className="flex flex-col items-center justify-center w-full h-[calc(100vh-420px)] gap-4">
@@ -9,15 +9,6 @@ export const NotConnected = (): React.ReactNode => (
       which you&apos;ve laid claim.
     </div>
     <div>&nbsp;</div>
-    <button
-      type="button"
-      className={twMerge(
-        "py-2 px-4 rounded-full text-sm uppercase tracking-widest",
-        "bg-dol-blue/25 hover:bg-dol-blue/75 duration-500"
-      )}
-      onClick={openWalletConnectModal}
-    >
-      Connect your wallet
-    </button>
+    <DolButton color="blue" roundedFull onClick={openWalletConnectModal}>Connect your wallet</DolButton>
   </div>
 );

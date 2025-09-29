@@ -1,8 +1,8 @@
-import { twMerge } from "tailwind-merge";
 import { getDappConfig } from "@erikmuir/dol-lib/common/dapp";
 import { useWalletInterface } from "@/hooks/use-wallet-interface";
 import { openWalletConnectModal } from "@/wallet";
 import { LogSection } from "./LogSection";
+import { DolButton } from "@/components/common/DolButton";
 
 export default function DukesLog(): React.ReactElement {
   const { dappAccountId } = getDappConfig();
@@ -14,18 +14,15 @@ export default function DukesLog(): React.ReactElement {
 
   const ConnectWalletButton = (): React.ReactNode => (
     <div className="text-center">
-      <button
-        type="button"
-        className={twMerge(
-          "bg-dol-dark rounded-full px-4 py-1",
-          "px-4 py-1",
-          "text-lg text-dol-yellow",
-          "hover:bg-gray-extra-dark transition duration-500 ease-in-out"
-        )}
+      <DolButton
+        color="dark"
+        size="lg"
+        roundedFull
         onClick={handleConnectClick}
+        className="text-dol-yellow hover:bg-gray-extra-dark transition ease-in-out"
       >
         Connect your wallet
-      </button>
+      </DolButton>
     </div>
   );
 

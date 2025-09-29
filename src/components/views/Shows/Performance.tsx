@@ -53,6 +53,7 @@ import { fetchStandardJson } from "@/utils";
 import { openWalletConnectModal } from "@/wallet";
 import { NFTPlaceholder } from "./NFTPlaceholder";
 import { PageNote } from "@/components/common/PageNote";
+import { DolButton } from "@/components/common/DolButton";
 
 const { hfbCollectionId, hfbHbarPrice } = getDappConfig();
 
@@ -90,17 +91,19 @@ export const Performance = (): React.ReactNode => {
 
   const whiteList = isWhiteList(accountId);
 
+  // // Randomize the image attributes when the page loads
   // useEffect(() => {
   //   randomizeAttributes();
   // }, []);
 
+  // Set songId from setlist, which will in turn fetch the song
   useEffect(() => {
     if (setlist) {
       setSongId(setlist.songId);
     }
   }, [setlist]);
 
-  // update the performance attributes when sources change
+  // Update performance attributes when sources change
   useEffect(() => {
     const newAttributes: PerformanceAttributes = {
       bgColor,
@@ -164,12 +167,14 @@ export const Performance = (): React.ReactNode => {
     setAttributes(newAttributes);
   }, [bgColor, donut, subject, track, setlist, setlists, song]);
 
+  // Set status to Already Minted if the performance has a serial
   useEffect(() => {
     if (performance && performance.serial) {
       setStatus(MintStatus.AlreadyMinted);
     }
   }, [performance]);
 
+  // Set bgColor, donut, and subject from metadata
   useEffect(() => {
     if (metadata && metadata.attributes) {
       setBgColor(extractBgColor(metadata.attributes, DolColorHex.Dark));
@@ -178,6 +183,7 @@ export const Performance = (): React.ReactNode => {
     }
   }, [metadata]);
 
+  // Set showImageAttributes and pageLoaded based on loading states
   useEffect(() => {
     if (!showImageAttributes) {
       setShowImageAttributes(
@@ -205,20 +211,17 @@ export const Performance = (): React.ReactNode => {
     showImageAttributes,
   ]);
 
-  const handleBgColorChanged = useCallback(
-    (color?: string) => { if (color) setBgColor(color as DolColorHex); },
-    [setBgColor]
-  );
+  const handleBgColorChanged = useCallback((color?: string) => {
+    if (color) setBgColor(color as DolColorHex);
+  }, [setBgColor]);
 
-  const handleDonutChanged = useCallback(
-    (color?: string) => { if (color) setDonut(color as DolColorHex); },
-    [setDonut]
-  );
+  const handleDonutChanged = useCallback((color?: string) => {
+    if (color) setDonut(color as DolColorHex);
+  }, [setDonut]);
 
-  const handleSubjectChanged = useCallback(
-    (position?: string) => { if (position) setSubject(position as Subject); },
-    [setSubject]
-  );
+  const handleSubjectChanged = useCallback((position?: string) => {
+    if (position) setSubject(position as Subject);
+  }, [setSubject]);
 
   const randomizeAttributes = () => {
     const randomBgColor = getRandomAttribute<DolColorHex>(bgColors);
@@ -351,7 +354,7 @@ export const Performance = (): React.ReactNode => {
     );
   };
 
-  const getImage = () => {
+  const getImage = (): React.ReactNode => {
     if (metadataLoading || !showImageAttributes) {
       return (
         <div className="w-[374px] h-[420px] relative">
@@ -379,62 +382,33 @@ export const Performance = (): React.ReactNode => {
     );
   };
 
-  const getMintButton = () => {
-    const buttonBase =
-      "py-2 px-4 rounded-full text-sm uppercase tracking-widest";
-    const buttonBlue = twMerge(
-      buttonBase,
-      "bg-dol-blue/25 hover:bg-dol-blue/75 duration-500"
-    );
-    const buttonGray = twMerge(buttonBase, "bg-gray-dark text-gray-medium");
+  const getMintButton = (): React.ReactNode => {
     if (performanceLoading || isAssociatedLoading) {
-      return (
-        <button type="button" className={buttonGray} disabled>
-          Please Wait...
-        </button>
-      );
+      return <DolButton color="gray" roundedFull disabled>Please Wait...</DolButton>;
     }
     if (!accountId) {
       return (
-        <button
-          type="button"
-          className={buttonBlue}
-          onClick={handleConnectClick}
-        >
-          Connect your wallet
-        </button>
+        <DolButton color="blue" roundedFull onClick={handleConnectClick}>Connect your wallet</DolButton>
       );
     }
     if (!isAssociated) {
       return (
-        <button
-          type="button"
-          className={buttonBlue}
-          onClick={handleAssociateClick}
-        >
-          Associate the token
-        </button>
+        <DolButton color="blue" roundedFull onClick={handleAssociateClick}>Associate the token</DolButton>
       );
     }
     if (performance?.serial) {
       return (
-        <button type="button" className={buttonGray} disabled>
-          Already Minted
-        </button>
+        <DolButton color="gray" roundedFull disabled>Already Minted</DolButton>
       );
     }
     if (performance?.lockedUntil && performance.lockedUntil > Date.now()) {
       return (
-        <button type="button" className={buttonGray} disabled>
-          Locked
-        </button>
+        <DolButton color="gray" roundedFull disabled>Locked</DolButton>
       );
     }
     if (!mintEnabled && !whiteList) {
       return (
-        <button type="button" className={buttonGray} disabled>
-          Public Mint: TBA
-        </button>
+        <DolButton color="gray" roundedFull disabled>Public Mint: TBA</DolButton>
       );
     }
     const disabled =
@@ -448,14 +422,14 @@ export const Performance = (): React.ReactNode => {
         MintStatus.MintComplete,
       ].includes(status);
     return (
-      <button
-        type="button"
-        className={disabled ? buttonGray : buttonBlue}
+      <DolButton
+        color="blue"
+        roundedFull
         onClick={handleMintClick}
         disabled={disabled}
       >
         Mint: {hfbHbarPrice} ℏ
-      </button>
+      </DolButton>
     );
   };
 
@@ -467,26 +441,21 @@ export const Performance = (): React.ReactNode => {
     ) : null;
   };
 
-  const formattedSetlist = getSetlistLines(setlists, parseInt(position))
-    .map((s) => (s.isCurrentPosition ? `${boldIndicator}${s.text}` : s.text))
-    .join("\n");
-
-  if (setlistLoading) {
-    return <Loading sizeInPixels={90} showLyric />;
-  }
-
-  const showAuditLogs = false;
-
-  const getPageNote = () => {
+  const getPageNote = (): React.ReactNode => {
     if (!performance || performance?.serial || (performance?.lockedUntil && performance.lockedUntil > Date.now())) {
       return null;
     }
 
-    if (!mintEnabled && !whiteList) return (
-      <PageNote color="dol-red" className="text-center">Public minting is currently disabled.</PageNote>
-    );
+    if (!mintEnabled && !whiteList) {
+      return (
+        <PageNote color="dol-red" className="text-center">
+          Public minting is currently disabled.
+        </PageNote>
+      );
+    }
 
-    const getAttributeTypeLabel = (text: string, className?: string) => <span className={twMerge("font-bold", className)}>{text}</span>;
+    const getAttributeTypeLabel = (text: string, className?: string) =>
+      <span className={twMerge("font-bold", className)}>{text}</span>;
 
     const customizable = getAttributeTypeLabel("Customizable", "text-dol-yellow");
     const fixed = getAttributeTypeLabel("Fixed", "text-dol-blue");
@@ -495,7 +464,11 @@ export const Performance = (): React.ReactNode => {
 
     return (
       <>
-        {!mintEnabled && whiteList && <PageNote color="dol-green" className="text-center">Public minting is currently disabled, but you&apos;re on the ALLOW list!</PageNote>}
+        {!mintEnabled && whiteList && (
+          <PageNote color="dol-green" className="text-center">
+            Public minting is currently disabled, but you&apos;re on the Guest List!
+          </PageNote>
+        )}
         <div className="text-justify">
           Feel free to modify or randomize the {customizable} attributes to your liking! When you mint,{" "}
           they&apos;ll be written to the NFT&apos;s metadata on chain, along with the {fixed} attributes{" "}
@@ -505,6 +478,16 @@ export const Performance = (): React.ReactNode => {
       </>
     );
   };
+
+  if (setlistLoading) {
+    return <Loading sizeInPixels={90} showLyric />;
+  }
+
+  const formattedSetlist = getSetlistLines(setlists, parseInt(position))
+    .map((s) => (s.isCurrentPosition ? `${boldIndicator}${s.text}` : s.text))
+    .join("\n");
+
+  const showAuditLogs = false;
 
   return (
     <div className="w-[320px] md:w-[500px] lg:w-[680px] mt-4 mx-auto flex flex-col">
