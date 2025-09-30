@@ -54,16 +54,16 @@ export const Wallet = () => {
       >
         <div className="flex flex-col gap-3 w-48">
           {accountId ? (
-            <DolButton color="red" onClick={handleDisconnectClick}>Disconnect</DolButton>
+            <DolButton color="red" fullWidth onClick={handleDisconnectClick}>Disconnect</DolButton>
           ) : (
-            <DolButton color="green" onClick={handleConnectClick}>Connect Wallet</DolButton>
+            <DolButton color="green" fullWidth onClick={handleConnectClick}>Connect Wallet</DolButton>
           )}
           {accountId && !isAssociated && (
-            <DolButton color="green" onClick={handleAssociateClick}>Associate Token</DolButton>
+            <DolButton color="green" fullWidth onClick={handleAssociateClick}>Associate Token</DolButton>
           )}
-          <DolButton color="blue" href="/terms-of-service" onClick={handleLinkClick}>Terms of Service</DolButton>
-          <DolButton color="yellow" href="/privacy-policy" onClick={handleLinkClick}>Privacy Policy</DolButton>
-          <DolButton color="gray" outline onClick={handleCancelClick}>Cancel</DolButton>
+          <DolButton color="blue" fullWidth href="/terms-of-service" onClick={handleLinkClick}>Terms of Service</DolButton>
+          <DolButton color="yellow" fullWidth href="/privacy-policy" onClick={handleLinkClick}>Privacy Policy</DolButton>
+          <DolButton color="gray" fullWidth outline onClick={handleCancelClick}>Cancel</DolButton>
         </div>
       </Modal>
     </div>

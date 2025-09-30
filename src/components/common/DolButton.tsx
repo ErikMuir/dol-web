@@ -7,7 +7,9 @@ export interface DolButtonProps {
   color?: DolColorExtended;
   href?: string;
   roundedFull?: boolean;
+  fullWidth?: boolean;
   outline?: boolean;
+  disabled?: boolean;
   className?: string;
   onClick?: () => void;
   children?: React.ReactNode;
@@ -18,27 +20,27 @@ export const DolButton = ({
   color = "gray",
   href,
   roundedFull = false,
+  fullWidth = false,
   outline = false,
+  disabled = false,
   className = "",
   onClick,
   children
 }: DolButtonProps) => {
-  const mergedClassName = buildClassName(size, roundedFull, color, outline, className);
-  return href
-    ? <Link href={href} className={mergedClassName} onClick={onClick}>{children}</Link>
-    : <button type="button" className={mergedClassName} onClick={onClick}>{children}</button>;
-};
 
-function buildClassName(
-  size: DolSize,
-  roundedFull: boolean,
-  color: DolColorExtended,
-  outline: boolean,
-  className: string) {
-
+  let sizeClasses = "";
+  let textColor = "text-dol-light";
+  let textHoverColor = "hover:text-white";
   let backgroundColor = "";
   let backgroundHoverColor = "";
   let borderColor = "";
+
+  switch (size) {
+    case "sm": sizeClasses = "text-xs py-1 tracking-wide"; break;
+    case "md": sizeClasses = "text-xs py-2 tracking-wider"; break;
+    case "lg": sizeClasses = "text-lg py-3 tracking-widest"; break;
+    default: sizeClasses = ""; break;
+  }
 
   switch (color) {
     case "blue":
@@ -67,6 +69,8 @@ function buildClassName(
       borderColor = "border-dol-dark";
       break;
     case "light":
+      textColor = "text-dol-dark/50";
+      textHoverColor = "hover:text-dol-dark";
       backgroundColor = "bg-dol-light/50";
       backgroundHoverColor = "hover:bg-dol-light/75";
       borderColor = "border-dol-light";
@@ -78,27 +82,27 @@ function buildClassName(
       break;
   }
 
-  let sizeClasses = "";
+  textColor = disabled ? "text-gray-medium" : textColor;
+  textHoverColor = disabled ? "hover:text-gray-medium" : textHoverColor;
+  backgroundColor = outline ? "bg-transparent" : backgroundColor;
+  backgroundColor = disabled ? "bg-gray-medium/25" : backgroundColor;
+  backgroundHoverColor = disabled ? "opacity-50 cursor-not-allowed" : backgroundHoverColor;
+  borderColor = outline ? `border ${borderColor}` : "";
 
-  switch (size) {
-    case "sm": sizeClasses = "text-xs py-1 tracking-wide"; break;
-    case "md": sizeClasses = "text-xs py-2 tracking-wider"; break;
-    case "lg": sizeClasses = "text-lg py-3 tracking-widest"; break;
-    default: sizeClasses = ""; break;
-  }
-
-  return twMerge(
+  const mergedClassName = twMerge(
     sizeClasses,
-    "w-full px-4",
-    roundedFull ? "rounded-full" : "rounded",
-    color === "light"
-      ? "text-dol-dark/50 hover:text-dol-dark"
-      : "text-dol-light hover:text-white",
-    "text-center uppercase",
-    outline ? "bg-transparent" : backgroundColor,
+    textColor,
+    textHoverColor,
+    backgroundColor,
     backgroundHoverColor,
-    "duration-500",
-    outline ? `border ${borderColor}` : "",
+    borderColor,
+    roundedFull ? "rounded-full" : "rounded",
+    fullWidth ? "w-full" : "w-auto",
+    "px-4 text-center uppercase duration-500 transition ease-in-out",
     className
   );
-}
+
+  return href
+    ? <Link href={disabled ? "#" : href} className={mergedClassName} onClick={onClick}>{children}</Link>
+    : <button type="button" className={mergedClassName} onClick={onClick} disabled={disabled}>{children}</button>;
+};
