@@ -30,14 +30,10 @@ export const MintStatusIndicator = ({
 }: MintStatusIndicatorProps): React.ReactElement => {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [shouldFetch, setShouldFetch] = useState(false);
-  const [coalescedPerformance, setCoalescedPerformance] = useState<DolPerformance | undefined>(providedPerformance);
+  const [textColor, setTextColor] = useState<string>("text-gray-medium");
+  const [label, setLabel] = useState<string>("Loading");
+  const [emoji, setEmoji] = useState<React.ReactNode>(<AnimatedDonut sizeInPixels={16} />);
   const { performance: fetchedPerformance, performanceLoading } = usePerformance(date, shouldFetch ? position : undefined);
-
-  useEffect(() => {
-    if (!providedPerformance && fetchedPerformance) {
-      setCoalescedPerformance(fetchedPerformance);
-    }
-  }, [providedPerformance, fetchedPerformance]);
 
   useEffect(() => {
     const element = containerRef.current;
@@ -62,26 +58,29 @@ export const MintStatusIndicator = ({
     return () => observer.disconnect();
   }, [providedPerformance, shouldFetch]);
 
-  const notFound = Boolean(!coalescedPerformance);
-  const isMinted = Boolean(coalescedPerformance?.serial);
-  const isLocked = Boolean(coalescedPerformance?.lockedUntil && coalescedPerformance.lockedUntil > Date.now());
-
-  const textColor = performanceLoading || notFound ? "text-gray-medium"
-    : isMinted ? "text-dol-red"
-    : isLocked ? "text-dol-yellow"
-    : "text-dol-green";
-
-  const label = performanceLoading ? "Loading"
-    : notFound ? "Unknown"
-    : isMinted ? "Claimed"
-    : isLocked ? "Locked"
-    : "Available";
-
-  const emoji = performanceLoading ? <AnimatedDonut sizeInPixels={16} />
-    : notFound ? "❓"
-    : isMinted ? "🔴"
-    : isLocked ? "🟡"
-    : "🟢";
+  useEffect(() => {
+    const coalescedPerformance = { ...providedPerformance, ...fetchedPerformance };
+    const notFound = Boolean(!coalescedPerformance);
+    const isMinted = Boolean(coalescedPerformance?.serial);
+    const isLocked = Boolean(coalescedPerformance?.lockedUntil && coalescedPerformance.lockedUntil > Date.now());
+    const newTextColor = performanceLoading || notFound ? "text-gray-medium"
+      : isMinted ? "text-dol-red"
+      : isLocked ? "text-dol-yellow"
+      : "text-dol-green";
+    const newLabel = performanceLoading ? "Loading"
+      : notFound ? "Unknown"
+      : isMinted ? "Claimed"
+      : isLocked ? "Locked"
+      : "Available";
+    const newEmoji = performanceLoading ? <AnimatedDonut sizeInPixels={16} />
+      : notFound ? "❓"
+      : isMinted ? "🔴"
+      : isLocked ? "🟡"
+      : "🟢";
+    setTextColor(newTextColor);
+    setLabel(newLabel);
+    setEmoji(newEmoji);
+  }, [providedPerformance, fetchedPerformance, performanceLoading]);
 
   const title = type === MintStatusIndicatorType.Emoji ? label : "";
 
