@@ -3,11 +3,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { twMerge } from "tailwind-merge";
 import {
-  getDolBorderColorClass,
-  getDolTextColorClass,
-  getDolTranslucentBackgroundColorClass,
+  DEPRECATED__getDolBorderColorClass,
+  DEPRECATED__getDolTextColorClass,
+  DEPRECATED__getDolTranslucentBackgroundColorClass,
   getLabelTextColorClass,
-} from "@erikmuir/dol-lib/common/dapp";
+} from "@erikmuir/dol-lib/dapp";
 import { AnimatedDonut } from "@/components/common/AnimatedDonut";
 import { BaseAttributeProps } from "./types";
 
@@ -87,7 +87,7 @@ export const LinkAttribute = ({
       <a
         target="_blank"
         href={href}
-        className={getDolTextColorClass(textColor)}
+        className={DEPRECATED__getDolTextColorClass(textColor)}
       >
         <FaLink size={24} />
       </a>
@@ -98,8 +98,8 @@ export const LinkAttribute = ({
     <div
       className={twMerge(
         "border rounded p-2 whitespace-nowrap text-center self-stretch",
-        getDolBorderColorClass(attributeColor),
-        getDolTranslucentBackgroundColorClass(attributeColor)
+        DEPRECATED__getDolBorderColorClass(attributeColor),
+        DEPRECATED__getDolTranslucentBackgroundColorClass(attributeColor)
       )}
     >
       {label && (

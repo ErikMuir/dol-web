@@ -1,5 +1,5 @@
 import { twMerge } from "tailwind-merge";
-import { DolColorExtended, DolSize } from "./types";
+import { DolColorExtended, DolSize } from "@erikmuir/dol-lib/types";
 import Link from "next/link";
 
 export interface DolButtonProps {

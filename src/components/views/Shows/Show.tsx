@@ -1,13 +1,8 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Setlist } from "@erikmuir/dol-lib/types";
-import { getSetText, sortByPosition } from "@erikmuir/dol-lib/common/dapp";
-import {
-  daysUntil,
-  toFriendlyDate,
-  toFriendlyDateTime,
-  sanitizeText,
-} from "@erikmuir/dol-lib/common/utils";
+import { getSetText, sortByPosition } from "@erikmuir/dol-lib/dapp";
+import { daysUntil, toFriendlyDate, toFriendlyDateTime, sanitizeText } from "@erikmuir/dol-lib/utils";
 import { Loading } from "@/components/common/Loading";
 import { useSetlists } from "@/hooks/use-setlists";
 import { useReviewsByDate } from "@/hooks/use-reviews";

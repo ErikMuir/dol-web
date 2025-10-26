@@ -9,15 +9,15 @@ import {
   PerformanceAttributes,
   PreTransferResponse,
   SerialErrorResponse,
+  SetlistLine,
   Subject,
 } from "@erikmuir/dol-lib/types";
 import {
   ipfsToHttps,
   boldIndicator,
   msToTime,
-} from "@erikmuir/dol-lib/common/utils";
+} from "@erikmuir/dol-lib/utils";
 import {
-  getDappConfig,
   extractBgColor,
   extractDonut,
   extractSubject,
@@ -27,7 +27,7 @@ import {
   getRandomAttribute,
   subjects,
   getSetText,
-} from "@erikmuir/dol-lib/common/dapp";
+} from "@erikmuir/dol-lib/dapp";
 import { Loading } from "@/components/common/Loading";
 import { MintStatusIndicator } from "@/components/common/MintStatusIndicator";
 import {
@@ -38,7 +38,8 @@ import {
   SectionHeader,
   OtherAttributes,
 } from "@/components/views/Shows/Attributes";
-import { isWhiteList, mintEnabled } from "@/env";
+import { toBoolean } from "@erikmuir/dol-lib/env";
+import { isWhiteList } from "@/env";
 import {
   useIsTokenAssociated,
   useNftMetadata,
@@ -55,14 +56,14 @@ import { NFTPlaceholder } from "./NFTPlaceholder";
 import { PageNote } from "@/components/common/PageNote";
 import { DolButton } from "@/components/common/DolButton";
 
-const { hfbCollectionId, hfbHbarPrice } = getDappConfig();
-
 export const Performance = (): React.ReactNode => {
   const pathname = usePathname();
   const pathParts = pathname.split("/");
   const date = pathParts.at(-2) ?? "";
   const position = pathParts.at(-1) ?? "";
   const parsedPosition = parseInt(position, 10);
+  const hfbCollectionId = `${process.env.NEXT_PUBLIC_HFB_COLLECTION_ID}`;
+  const mintEnabled = toBoolean(`${process.env.NEXT_PUBLIC_MINT_ENABLED}`);
 
   const [songId, setSongId] = useState<number>();
   const [bgColor, setBgColor] = useState<DolColorHex>(DolColorHex.Dark);
@@ -77,18 +78,11 @@ export const Performance = (): React.ReactNode => {
   const { setlists, setlistsLoading } = useSetlists(date);
   const { song, songLoading } = useSong(songId);
   const { track, trackLoading } = useTrack(date, parsedPosition);
-  const { performance, performanceLoading } = usePerformance(
-    date,
-    parsedPosition
-  );
-  const { metadata, metadataLoading } = useNftMetadata(
-    hfbCollectionId,
-    performance?.serial
-  );
+  const { performance, performanceLoading } = usePerformance(date, parsedPosition);
+  const { metadata, metadataLoading } = useNftMetadata(hfbCollectionId, performance?.serial);
   const { accountId, walletInterface } = useWalletInterface();
-  const { isAssociated, isAssociatedLoading, mutateIsAssociated } =
-    useIsTokenAssociated(hfbCollectionId, accountId);
-
+  const { isAssociated, isAssociatedLoading, mutateIsAssociated } = useIsTokenAssociated(hfbCollectionId, accountId);
+  
   const whiteList = isWhiteList(accountId);
 
   // // Randomize the image attributes when the page loads
@@ -428,7 +422,7 @@ export const Performance = (): React.ReactNode => {
         onClick={handleMintClick}
         disabled={disabled}
       >
-        Mint: {hfbHbarPrice} ℏ
+        Mint: {`${process.env.NEXT_PUBLIC_HFB_HBAR_PRICE || "46"}`} ℏ
       </DolButton>
     );
   };
@@ -448,7 +442,7 @@ export const Performance = (): React.ReactNode => {
 
     if (!mintEnabled && !whiteList) {
       return (
-        <PageNote color="dol-red" className="text-center">
+        <PageNote color="red" className="text-center">
           Public minting is currently disabled.
         </PageNote>
       );
@@ -465,7 +459,7 @@ export const Performance = (): React.ReactNode => {
     return (
       <>
         {!mintEnabled && whiteList && (
-          <PageNote color="dol-green" className="text-center">
+          <PageNote color="green" className="text-center">
             Public minting is currently disabled, but you&apos;re on the Guest List!
           </PageNote>
         )}
@@ -484,7 +478,7 @@ export const Performance = (): React.ReactNode => {
   }
 
   const formattedSetlist = getSetlistLines(setlists, parseInt(position))
-    .map((s) => (s.isCurrentPosition ? `${boldIndicator}${s.text}` : s.text))
+    .map((s: SetlistLine) => (s.isCurrentPosition ? `${boldIndicator}${s.text}` : s.text))
     .join("\n");
 
   const showAuditLogs = false;

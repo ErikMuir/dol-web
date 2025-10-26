@@ -1,13 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getDappConfig, getPerformanceId } from "@erikmuir/dol-lib/common/dapp";
 import { updateNftMetadata } from "@erikmuir/dol-lib/server/dapp";
 import {
   getPerformance,
   setSerial,
   setPurchaseDetails,
 } from "@erikmuir/dol-lib/server/dynamo";
-import { isWhiteList, mintEnabled } from "@/env";
+import { EnvKeys, getBoolean, getRequired } from "@erikmuir/dol-lib/env";
 import { badRequest, StandardPayload, success } from "@/utils";
+import { getPerformanceId } from "@erikmuir/dol-lib/dapp";
 
 // /api/mint/[accountId]/[showDate]/[position]/[serial] (post-transfer endpoint)
 
@@ -23,12 +23,14 @@ export async function POST(
   { params }: { params: Promise<PostTransferParams> }
 ): Promise<NextResponse<StandardPayload<boolean | string>>> {
   const { accountId, showDate, position, serial } = await params;
+  const mintEnabled = getBoolean(EnvKeys.NEXT_PUBLIC_MINT_ENABLED);
+  const whiteList = getRequired(EnvKeys.NEXT_PUBLIC_WHITE_LIST);
+  const hfbCollectionId = getRequired(EnvKeys.NEXT_PUBLIC_HFB_COLLECTION_ID);
 
-  if (!mintEnabled && !isWhiteList(accountId)) {
+  if (!mintEnabled && !whiteList.includes(accountId)) {
     return badRequest("Minting is disabled");
   }
 
-  const { hfbCollectionId } = getDappConfig();
   const parsedPosition = parseInt(position, 10);
   const parsedSerial = parseInt(serial, 10);
   const performanceId = getPerformanceId(showDate, parsedPosition);

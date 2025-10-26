@@ -1,12 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getDappConfig } from "@erikmuir/dol-lib/common/dapp";
+import { EnvKeys, getRequired } from "@erikmuir/dol-lib/env";
 import {
   unlockPerformance,
   unlockSerial,
 } from "@erikmuir/dol-lib/server/dynamo";
 import { StandardPayload, success } from "@/utils";
 
-// /api/mint/[accountId]/[showDate]/[position]/[serial]
+// /api/mint/[accountId]/[showDate]/[position]/[serial]/abort
 
 export type AbortTransferParams = {
   accountId: string;
@@ -21,7 +21,7 @@ export async function POST(
 ): Promise<NextResponse<StandardPayload<void | string>>> {
   try {
     const { accountId, showDate, position, serial } = await params;
-    const { hfbCollectionId } = getDappConfig();
+    const hfbCollectionId = getRequired(EnvKeys.NEXT_PUBLIC_HFB_COLLECTION_ID);
     const parsedPosition = parseInt(position, 10);
     const parsedSerial = parseInt(serial, 10);
     await unlockPerformance(showDate, parsedPosition, accountId);

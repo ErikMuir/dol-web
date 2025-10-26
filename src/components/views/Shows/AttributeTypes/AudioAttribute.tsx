@@ -1,12 +1,12 @@
 import { twMerge } from "tailwind-merge";
 import { AnimatedDonut } from "@/components/common/AnimatedDonut";
 import {
-  getDolAudioPlayerColorClass,
-  getDolBorderColorClass,
-  getDolTextColorClass,
-  getDolTranslucentBackgroundColorClass,
+  DEPRECATED__getDolAudioPlayerColorClass,
+  DEPRECATED__getDolBorderColorClass,
+  DEPRECATED__getDolTextColorClass,
+  DEPRECATED__getDolTranslucentBackgroundColorClass,
   getLabelTextColorClass,
-} from "@erikmuir/dol-lib/common/dapp";
+} from "@erikmuir/dol-lib/dapp";
 import { BaseAttributeProps } from "./types";
 
 export type AudioAttributeProps = BaseAttributeProps & {
@@ -35,8 +35,8 @@ export const AudioAttribute = ({
         <audio
           controls
           className={twMerge(
-            getDolAudioPlayerColorClass(attributeColor || textColor),
-            getDolTextColorClass(textColor),
+            DEPRECATED__getDolAudioPlayerColorClass(attributeColor || textColor),
+            DEPRECATED__getDolTextColorClass(textColor),
             "font-mono"
           )}
         >
@@ -52,8 +52,8 @@ export const AudioAttribute = ({
       className={twMerge(
         "border rounded p-2 whitespace-nowrap text-center self-stretch",
         fullWidth ? "w-full" : "",
-        getDolBorderColorClass(attributeColor),
-        getDolTranslucentBackgroundColorClass(attributeColor)
+        DEPRECATED__getDolBorderColorClass(attributeColor),
+        DEPRECATED__getDolTranslucentBackgroundColorClass(attributeColor)
       )}
     >
       {label && (

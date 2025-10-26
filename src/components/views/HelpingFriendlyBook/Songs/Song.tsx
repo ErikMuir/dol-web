@@ -2,11 +2,11 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { twMerge } from "tailwind-merge";
 import {
-  getDolBackgroundColorClass,
+  DEPRECATED__getDolBackgroundColorClass,
   getEraDolColorClass,
   getVenueLocation,
-} from "@erikmuir/dol-lib/common/dapp";
-import { toFriendlyDate } from "@erikmuir/dol-lib/common/utils";
+} from "@erikmuir/dol-lib/dapp";
+import { toFriendlyDate } from "@erikmuir/dol-lib/utils";
 import { Loading } from "@/components/common/Loading";
 import { MintStatusIndicator } from "@/components/common/MintStatusIndicator";
 import { useSetlistsBySongSlug } from "@/hooks";
@@ -29,7 +29,7 @@ export const Song = (): React.ReactElement => {
   const setlistItems = setlists.map((setlist, index) => {
     const { showDate, position, venue, city, state, country } = setlist;
     const eraColor = getEraDolColorClass(showDate);
-    const eraBgColor = getDolBackgroundColorClass(eraColor);
+    const eraBgColor = DEPRECATED__getDolBackgroundColorClass(eraColor);
     return (
       <Link
         key={index}

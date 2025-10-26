@@ -6,15 +6,14 @@ import { FaPlusCircle } from "react-icons/fa";
 import { twMerge } from "tailwind-merge";
 import { PerformanceAttributes } from "@erikmuir/dol-lib/types";
 import {
-  getCollectionName,
   getEraDolColorClass,
-  getDolTextColorClass,
+  DEPRECATED__getDolTextColorClass,
   extractPerformanceAttributes,
-} from "@erikmuir/dol-lib/common/dapp";
+} from "@erikmuir/dol-lib/dapp";
 import {
   ipfsToHttps,
   toFriendlyDate,
-} from "@erikmuir/dol-lib/common/utils";
+} from "@erikmuir/dol-lib/utils";
 import { useNftMetadata } from "@/hooks";
 import { Loading } from "@/components/common/Loading";
 
@@ -71,7 +70,7 @@ export const StashItem = ({
     }
 
     const eraColor = getEraDolColorClass(attributes.date);
-    const textColorClass = getDolTextColorClass(eraColor);
+    const textColorClass = DEPRECATED__getDolTextColorClass(eraColor);
 
     return (
       <div className="flex items-start p-2 gap-2">
@@ -80,7 +79,7 @@ export const StashItem = ({
           alt={metadata.name}
           width={80}
           height={80}
-          className="mx-auto rounded-lg"
+          className="mx-auto rounded-lg w-auto h-auto"
         />
         <div className="grow">
           <div className="text-xl">{attributes.song}</div>
@@ -118,7 +117,7 @@ export const StashItem = ({
           "border-t border-x border-dol-blue/25"
         )}
       >
-        {getCollectionName(tokenId)} #{serial}
+        Helping Friendly Book #{serial}
       </div>
       <div
         className={twMerge(

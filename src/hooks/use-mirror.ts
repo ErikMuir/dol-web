@@ -3,7 +3,7 @@
 import useSWR from "swr";
 import { NftMetadata, MirrorNft } from "@erikmuir/dol-lib/types";
 import { fetchStandardJson } from "@/utils";
-import { sortBySerialAscending } from "@erikmuir/dol-lib/common/dapp";
+import { sortBySerialAscending } from "@erikmuir/dol-lib/dapp";
 
 export function useIsTokenAssociated(
   tokenId: string,

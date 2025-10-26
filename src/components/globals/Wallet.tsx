@@ -1,12 +1,11 @@
 import { useCallback, useState } from "react";
-import { getDappConfig } from "@erikmuir/dol-lib/common/dapp";
 import { useIsTokenAssociated, useWalletInterface } from "@/hooks";
 import { openWalletConnectModal } from "@/wallet";
 import { DolButton } from "../common/DolButton";
 import Modal from "./Modal";
 
 export const Wallet = () => {
-  const { hfbCollectionId } = getDappConfig();
+  const hfbCollectionId = `${process.env.NEXT_PUBLIC_HFB_COLLECTION_ID}`;
   const [open, setOpen] = useState(false);
   const { accountId, walletInterface } = useWalletInterface();
   const { isAssociated, mutateIsAssociated } = useIsTokenAssociated(hfbCollectionId, accountId);

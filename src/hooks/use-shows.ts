@@ -2,10 +2,10 @@
 
 import { useEffect, useState } from "react";
 import useSWR from "swr";
+import { sortByShowDate } from "@erikmuir/dol-lib/dapp";
 import { Show } from "@erikmuir/dol-lib/types";
-import { padLeft } from "@erikmuir/dol-lib/common/utils";
+import { padLeft } from "@erikmuir/dol-lib/utils";
 import { fetchStandardJson } from "@/utils";
-import { sortByShowDate } from "@erikmuir/dol-lib/common/dapp";
 
 export function useShows() {
   const { data, isLoading, error } = useSWR<Show[]>(

@@ -1,13 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Hbar, TransferTransaction } from "@hashgraph/sdk";
-import {
-  PerformanceAttributes,
-  SerialErrorResponse,
-} from "@erikmuir/dol-lib/types";
-import { getDappConfig } from "@erikmuir/dol-lib/common/dapp";
+import { EnvKeys, getBoolean, getRequired } from "@erikmuir/dol-lib/env";
+import { PerformanceAttributes, SerialErrorResponse } from "@erikmuir/dol-lib/types";
 import { getHederaClient } from "@erikmuir/dol-lib/server/blockchain";
 import { obtainLock } from "@erikmuir/dol-lib/server/dapp";
-import { isWhiteList, mintEnabled } from "@/env";
 import { badRequest, StandardPayload, success } from "@/utils";
 
 // /api/mint/[accountId]/[showDate]/[position] (pre-transfer endpoint)
@@ -28,8 +24,14 @@ export async function POST(
   { params }: { params: Promise<PreTransferParams> }
 ): Promise<NextResponse<StandardPayload<ServerPreTransferResponse | string>>> {
   const { showDate, position, accountId } = await params;
+  
+  const mintEnabled = getBoolean(EnvKeys.NEXT_PUBLIC_MINT_ENABLED);
+  const whiteList = getRequired(EnvKeys.NEXT_PUBLIC_WHITE_LIST);
+  const hfbHbarPrice = getRequired(EnvKeys.NEXT_PUBLIC_HFB_HBAR_PRICE);
+  const treasuryAccount = getRequired(EnvKeys.NEXT_PUBLIC_TREASURY_ACCOUNT);
+  const hfbCollectionId = getRequired(EnvKeys.NEXT_PUBLIC_HFB_COLLECTION_ID);
 
-  if (!mintEnabled && !isWhiteList(accountId)) {
+  if (!mintEnabled && !whiteList.includes(accountId)) {
     return badRequest("Minting is disabled");
   }
 
@@ -49,14 +51,12 @@ export async function POST(
     return success({ serial });
   }
 
-  const { hfbCollectionId, hfbHbarPrice, dappAccountId } = getDappConfig();
-
   const client = getHederaClient();
 
   const transaction = new TransferTransaction()
     .addHbarTransfer(accountId, new Hbar(-hfbHbarPrice))
-    .addHbarTransfer(dappAccountId, new Hbar(hfbHbarPrice))
-    .addNftTransfer(hfbCollectionId, serial, dappAccountId, accountId)
+    .addHbarTransfer(treasuryAccount, new Hbar(hfbHbarPrice))
+    .addNftTransfer(hfbCollectionId, serial, treasuryAccount, accountId)
     .freezeWith(client);
   const signedTx = await transaction.signWithOperator(client);
   const txBytes = signedTx.toBytes();

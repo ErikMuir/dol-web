@@ -1,11 +1,9 @@
-import { getDappConfig } from "@erikmuir/dol-lib/common/dapp";
 import { useWalletInterface } from "@/hooks/use-wallet-interface";
 import { openWalletConnectModal } from "@/wallet";
 import { LogSection } from "./LogSection";
 import { DolButton } from "@/components/common/DolButton";
 
 export default function DukesLog(): React.ReactElement {
-  const { dappAccountId } = getDappConfig();
   const { accountId } = useWalletInterface();
 
   const handleConnectClick = async () => {
@@ -37,7 +35,7 @@ export default function DukesLog(): React.ReactElement {
         ) : (
           <ConnectWalletButton />
         )}
-        <LogSection title="Duke's Actions" logKey={dappAccountId} />
+        <LogSection title="Duke's Actions" logKey={`${process.env.NEXT_PUBLIC_TREASURY_ACCOUNT}`} />
       </div>
     </div>
   );

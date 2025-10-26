@@ -1,11 +1,11 @@
 import { twMerge } from "tailwind-merge";
 import {
-  getDolBorderColorClass,
-  getDolTextColorClass,
-  getDolTranslucentBackgroundColorClass,
+  DEPRECATED__getDolBorderColorClass,
+  DEPRECATED__getDolTextColorClass,
+  DEPRECATED__getDolTranslucentBackgroundColorClass,
   getLabelTextColorClass,
-} from "@erikmuir/dol-lib/common/dapp";
-import { boldIndicator, sanitizeText } from "@erikmuir/dol-lib/common/utils";
+} from "@erikmuir/dol-lib/dapp";
+import { boldIndicator, sanitizeText } from "@erikmuir/dol-lib/utils";
 import { AnimatedDonut } from "@/components/common/AnimatedDonut";
 import { BaseAttributeProps } from "./types";
 
@@ -42,7 +42,7 @@ export const TextAttribute = ({
         {lines.map((line, index) => {
           if (line === "") return <br key={index} />;
           const position = textCentered ? "text-center" : "text-left";
-          let color: string = getDolTextColorClass(textColor);
+          let color: string = DEPRECATED__getDolTextColorClass(textColor);
           let size: string = "text-sm";
           let weight: string = "font-normal";
 
@@ -77,8 +77,8 @@ export const TextAttribute = ({
         "max-h-96 border rounded py-2 px-2 whitespace-nowrap self-stretch",
         fullWidth ? "w-full" : "",
         textCentered ? "text-center" : "text-left",
-        getDolBorderColorClass(attributeColor),
-        getDolTranslucentBackgroundColorClass(attributeColor)
+        DEPRECATED__getDolBorderColorClass(attributeColor),
+        DEPRECATED__getDolTranslucentBackgroundColorClass(attributeColor)
       )}
     >
       {label && (

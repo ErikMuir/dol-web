@@ -1,12 +1,12 @@
 import Link from "next/link";
 import { twMerge } from "tailwind-merge";
 import {
-  getDolBorderColorClass,
-  getDolTextColorClass,
-  getDolTranslucentBackgroundColorClass,
+  DEPRECATED__getDolBorderColorClass,
+  DEPRECATED__getDolTextColorClass,
+  DEPRECATED__getDolTranslucentBackgroundColorClass,
   getLabelTextColorClass,
-} from "@erikmuir/dol-lib/common/dapp";
-import { sanitizeText } from "@erikmuir/dol-lib/common/utils";
+} from "@erikmuir/dol-lib/dapp";
+import { sanitizeText } from "@erikmuir/dol-lib/utils";
 import { AnimatedDonut } from "@/components/common/AnimatedDonut";
 import { BaseAttributeProps } from "./types";
 
@@ -59,8 +59,8 @@ export const DataAttribute = ({
       className={twMerge(
         "border rounded p-2 whitespace-nowrap text-center self-stretch",
         fullWidth ? "w-full" : "w-fit",
-        getDolBorderColorClass(attributeColor),
-        getDolTranslucentBackgroundColorClass(attributeColor)
+        DEPRECATED__getDolBorderColorClass(attributeColor),
+        DEPRECATED__getDolTranslucentBackgroundColorClass(attributeColor)
       )}
     >
       {label && (
@@ -76,7 +76,7 @@ export const DataAttribute = ({
       <div
         className={twMerge(
           "flex flex-col items-center justify-center font-mono",
-          getDolTextColorClass(textColor)
+          DEPRECATED__getDolTextColorClass(textColor)
         )}
       >
         {getContent()}

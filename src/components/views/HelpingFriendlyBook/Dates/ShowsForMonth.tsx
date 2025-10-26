@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Show } from "@erikmuir/dol-lib/types";
-import { getDayShortName, sanitizeText } from "@erikmuir/dol-lib/common/utils";
+import { getDayShortName, sanitizeText } from "@erikmuir/dol-lib/utils";
 import { twMerge } from "tailwind-merge";
 
 export type ShowsForMonthProps = {

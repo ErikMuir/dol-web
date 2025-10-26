@@ -1,15 +1,12 @@
-import { getDappConfig } from "@erikmuir/dol-lib/common/dapp";
 import { useAccountNfts, useWalletInterface } from "@/hooks";
 import { Loading } from "@/components/common/Loading";
 import { NoPages } from "./NoPages";
 import { NotConnected } from "./NotConnected";
 import { AddToStashItem, StashItem } from "./StashItem";
 
-const { hfbCollectionId } = getDappConfig();
-
-export default function YourPages(): React.ReactElement {
+export default function YourStash(): React.ReactElement {
   const { accountId } = useWalletInterface();
-  const { nfts, nftsLoading } = useAccountNfts(hfbCollectionId, accountId);
+  const { nfts, nftsLoading } = useAccountNfts(`${process.env.NEXT_PUBLIC_HFB_COLLECTION_ID}`, accountId);
 
   const getContent = (): React.ReactNode => {
     if (!accountId) {

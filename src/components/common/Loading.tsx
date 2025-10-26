@@ -1,4 +1,4 @@
-import { getLyricByCategory } from "@erikmuir/dol-lib/common/dapp";
+import { getLyricByCategory } from "@erikmuir/dol-lib/dapp";
 import { AnimatedDonut } from "./AnimatedDonut";
 import { Lyric } from "./Lyric";
 
