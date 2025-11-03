@@ -16,20 +16,20 @@ export const DynamicAttributes = ({
         label="Times Played"
         data={song?.timesPlayed}
         loading={songLoading}
-        attributeColor={"dol-green"}
+        attributeColor={"green"}
       />
       <DataAttribute
         label="Last Played"
         data={song?.lastPlayed}
         href={`/shows/${song?.lastPlayed}`}
         loading={songLoading}
-        attributeColor={"dol-green"}
+        attributeColor={"green"}
       />
       <DataAttribute
         label="Current Gap"
         data={song?.gap || "0"}
         loading={songLoading}
-        attributeColor={"dol-green"}
+        attributeColor={"green"}
       />
     </div>
   );

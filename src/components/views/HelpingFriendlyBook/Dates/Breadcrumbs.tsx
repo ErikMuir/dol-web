@@ -1,5 +1,5 @@
 import { usePathname, useRouter } from "next/navigation";
-import { sanitizeText } from "@erikmuir/dol-lib/common/utils";
+import { sanitizeText } from "@erikmuir/dol-lib/utils";
 
 export type BreadcrumbsProps = {
   era?: string;

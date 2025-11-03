@@ -1,5 +1,5 @@
 import { Show } from "@erikmuir/dol-lib/types";
-import { getMonthName } from "@erikmuir/dol-lib/common/utils";
+import { getMonthName } from "@erikmuir/dol-lib/utils";
 import { NoShowsFound } from "@/components/common/NoShowsFound";
 import { ShowsForMonth } from "@/components/views/HelpingFriendlyBook/Dates/ShowsForMonth";
 import {

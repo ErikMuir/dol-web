@@ -1,16 +1,16 @@
 import { render } from "@testing-library/react";
 import { Loading } from "./Loading";
 
-jest.mock("@erikmuir/dol-lib/common/dapp", () => ({
-  getLyricByCategory: () => [
-    [{ text: "line1" }],
-    [{ text: "line2", highlight: true }],
-  ],
-  getDolBackgroundColorClass: () => "bg-gray-500",
-  getDolBorderColorClass: () => "border-gray-500",
-  getDolTextColorClass: () => "text-gray-500",
-  getPseudoRandomDolColorClass: () => "dol-blue",
-}));
+jest.mock("@erikmuir/dol-lib/dapp", () => {
+  const actual = jest.requireActual("@erikmuir/dol-lib/dapp");
+  return {
+    ...actual,
+    getLyricByCategory: () => [
+      [{ text: "line1" }],
+      [{ text: "line2", highlight: true }],
+    ],
+  };
+});
 
 describe("Loading", () => {
   it("renders without crashing", () => {

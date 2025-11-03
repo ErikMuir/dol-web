@@ -8,11 +8,11 @@ import {
 } from "react-icons/md";
 import { twMerge } from "tailwind-merge";
 import { AuditLogData } from "@erikmuir/dol-lib/types";
-import { chunkArray } from "@erikmuir/dol-lib/common/utils";
+import { chunkArray } from "@erikmuir/dol-lib/utils";
 import {
   getPerformanceId,
   sortByTimestampDescending,
-} from "@erikmuir/dol-lib/common/dapp";
+} from "@erikmuir/dol-lib/dapp";
 import {
   FailureStatusIcon,
   SuccessStatusIcon,

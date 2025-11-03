@@ -1,4 +1,4 @@
-import { getLyricByCategory } from "@erikmuir/dol-lib/common/dapp";
+import { getLyricByCategory } from "@erikmuir/dol-lib/dapp";
 import { AnimatedDonut } from "./AnimatedDonut";
 import { Lyric } from "./Lyric";
 
@@ -27,7 +27,7 @@ export const Loading = ({
           className="absolute w-full px-4 text-center left-0 text-xl"
           style={{ top: `calc(50% - ${14 * lyric.length}px)` }}
         >
-          <Lyric lines={lyric} highlightColor="dol-yellow" />
+          <Lyric lines={lyric} highlightColor="yellow" />
         </div>
       )}
     </>

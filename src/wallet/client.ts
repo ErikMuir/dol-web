@@ -16,18 +16,23 @@ import {
   HederaSessionEvent,
   HederaChainId,
 } from "@hashgraph/hedera-wallet-connect";
-import { getDappConfig } from "@erikmuir/dol-lib/common/dapp";
-import { sleep } from "@erikmuir/dol-lib/common/utils";
+import type { ActionContext } from "@erikmuir/dol-lib/types";
+import { sleep } from "@erikmuir/dol-lib/utils";
+import { fetchJson } from "@/utils";
 import { WalletConnectContext } from "./context";
 import { WalletInterface } from "./wallet-interface";
-import { fetchJson } from "@/utils";
-import { ActionContext } from "@erikmuir/dol-lib/types";
 
 // Created refreshEvent because `dappConnector.walletConnectClient.on(eventName, syncWithWalletConnectContext)` would not call syncWithWalletConnectContext
 // Reference usage from walletconnect implementation https://github.com/hashgraph/hedera-wallet-connect/blob/main/src/lib/dapp/index.ts#L120C1-L124C9
 const refreshEvent = new EventEmitter();
 
-const { name, description, url, icons, network, projectId, hfbCollectionId } = getDappConfig();
+const name = "Duke of Lizards";
+const description = "A Phish-themed Web3 dApp built on Hedera";
+const url = `${process.env.NEXT_PUBLIC_APP_URL}`;
+const icons = [`${url}/logo.png`];
+const network = `${process.env.NEXT_PUBLIC_NETWORK}`;
+const projectId = `${process.env.NEXT_PUBLIC_PROJECT_ID}`;
+const hfbCollectionId = `${process.env.NEXT_PUBLIC_HFB_COLLECTION_ID}`;
 
 const dappConnector = new DAppConnector(
   { name, description, url, icons },

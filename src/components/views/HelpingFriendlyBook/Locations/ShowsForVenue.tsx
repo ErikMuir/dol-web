@@ -3,7 +3,7 @@ import { Show } from "@erikmuir/dol-lib/types";
 import {
   getMonthShortName,
   sanitizeText,
-} from "@erikmuir/dol-lib/common/utils";
+} from "@erikmuir/dol-lib/utils";
 
 export type ShowsForVenueProps = {
   header: string;

@@ -27,18 +27,6 @@ jest.mock("next/server", () => ({
   },
 }));
 
-// Provide minimal mocks for ESM-only dol-lib modules to avoid transform errors
-jest.mock("@erikmuir/dol-lib/common/utils", () => ({
-  padLeft: (value: string, length: number) => String(value).padStart(length, "0"),
-}));
-
-jest.mock("@erikmuir/dol-lib/common/dapp", () => ({
-  getDolBackgroundColorClass: () => "bg-gray-500",
-  getDolBorderColorClass: () => "border-gray-500",
-  getLyricByCategory: () => ["lyric-line-1", "lyric-line-2"],
-  sortByShowDate: () => 0,
-}));
-
 // Polyfills for supertest/Node libs expecting Web APIs
 // TextEncoder/TextDecoder are used by dependency chains (e.g., noble/hashes)
 try {

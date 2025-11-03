@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { twMerge } from "tailwind-merge";
 import { Setlist } from "@erikmuir/dol-lib/types";
-import { getDappConfig } from "@erikmuir/dol-lib/common/dapp";
 import {
   FailureStatusIcon,
   SuccessStatusIcon,
@@ -20,8 +19,6 @@ export const AuditLogsAttribute = ({
 }: AuditLogsAttributeProps) => {
   const [auditLogKey, setAuditLogKey] = useState<string>();
   const { auditLogs, auditLogsLoading } = useAuditLogs(auditLogKey);
-
-  const { dappAccountId } = getDappConfig();
 
   useEffect(() => {
     if (setlist) {
@@ -51,7 +48,7 @@ export const AuditLogsAttribute = ({
           const timeString = timestamp.toTimeString().slice(0, 8);
           const dateTime = `${dateString} ${timeString}`;
           const accountIdText =
-            log.accountId === dappAccountId ? "SYSTEM" : log.accountId;
+            log.accountId === `${process.env.NEXT_PUBLIC_TREASURY_ACCOUNT}` ? "SYSTEM" : log.accountId;
           return (
             <tr key={index} className={log.success ? "" : "bg-dol-red/10"}>
               <td className={twMerge(row, border, monospace)}>{dateTime}</td>
@@ -73,7 +70,7 @@ export const AuditLogsAttribute = ({
       <TableAttribute
         rows={rows}
         loading={setlistLoading || auditLogsLoading}
-        attributeColor={"dol-dark"}
+        attributeColor={"dark"}
         fullWidth
         header
       />

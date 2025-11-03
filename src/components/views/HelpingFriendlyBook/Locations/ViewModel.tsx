@@ -1,5 +1,5 @@
 import { Show } from "@erikmuir/dol-lib/types";
-import { getStateName } from "@erikmuir/dol-lib/common/dapp";
+import { getStateName } from "@erikmuir/dol-lib/dapp";
 import { ShowsVenueDict } from "@/hooks/use-shows";
 import { NoShowsFound } from "@/components/common/NoShowsFound";
 import {

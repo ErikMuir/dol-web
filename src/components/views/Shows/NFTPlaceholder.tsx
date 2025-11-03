@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { twMerge } from "tailwind-merge";
-import { PerformanceImageAttributes } from "@erikmuir/dol-lib/types";
-import { getDolBackgroundColorClass } from "@erikmuir/dol-lib/common/dapp";
+import { getTwDolColor, getDolColorFromHexValue } from "@erikmuir/dol-lib/dapp";
+import { type PerformanceImageAttributes, TwColorClassPrefix } from "@erikmuir/dol-lib/types";
 import { Donut } from "@/components/common/Shapes";
 
 export const NFTPlaceholder = ({
@@ -11,7 +11,9 @@ export const NFTPlaceholder = ({
   donut,
   subject,
 }: PerformanceImageAttributes): React.ReactNode => {
-  const bgColorClassName = getDolBackgroundColorClass(bgColor);
+  const dolColor = getDolColorFromHexValue(bgColor) || "light";
+
+  const bgColorClassName = getTwDolColor(dolColor, TwColorClassPrefix.Background);
 
   return (
     <div

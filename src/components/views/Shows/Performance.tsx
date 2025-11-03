@@ -5,19 +5,19 @@ import { twMerge } from "tailwind-merge";
 import { NftId, TokenId, TransferTransaction } from "@hashgraph/sdk";
 import {
   DolColorHex,
-  MintStatus,
+  MintStatusDisplayText,
   PerformanceAttributes,
   PreTransferResponse,
   SerialErrorResponse,
+  SetlistLine,
   Subject,
 } from "@erikmuir/dol-lib/types";
 import {
   ipfsToHttps,
   boldIndicator,
   msToTime,
-} from "@erikmuir/dol-lib/common/utils";
+} from "@erikmuir/dol-lib/utils";
 import {
-  getDappConfig,
   extractBgColor,
   extractDonut,
   extractSubject,
@@ -27,7 +27,7 @@ import {
   getRandomAttribute,
   subjects,
   getSetText,
-} from "@erikmuir/dol-lib/common/dapp";
+} from "@erikmuir/dol-lib/dapp";
 import { Loading } from "@/components/common/Loading";
 import { MintStatusIndicator } from "@/components/common/MintStatusIndicator";
 import {
@@ -38,7 +38,8 @@ import {
   SectionHeader,
   OtherAttributes,
 } from "@/components/views/Shows/Attributes";
-import { isWhiteList, mintEnabled } from "@/env";
+import { toBoolean } from "@erikmuir/dol-lib/env";
+import { isWhiteList } from "@/env";
 import {
   useIsTokenAssociated,
   useNftMetadata,
@@ -55,21 +56,21 @@ import { NFTPlaceholder } from "./NFTPlaceholder";
 import { PageNote } from "@/components/common/PageNote";
 import { DolButton } from "@/components/common/DolButton";
 
-const { hfbCollectionId, hfbHbarPrice } = getDappConfig();
-
 export const Performance = (): React.ReactNode => {
   const pathname = usePathname();
   const pathParts = pathname.split("/");
   const date = pathParts.at(-2) ?? "";
   const position = pathParts.at(-1) ?? "";
   const parsedPosition = parseInt(position, 10);
+  const hfbCollectionId = `${process.env.NEXT_PUBLIC_HFB_COLLECTION_ID}`;
+  const mintEnabled = toBoolean(`${process.env.NEXT_PUBLIC_MINT_ENABLED}`);
 
   const [songId, setSongId] = useState<number>();
   const [bgColor, setBgColor] = useState<DolColorHex>(DolColorHex.Dark);
   const [donut, setDonut] = useState<DolColorHex | undefined>(DolColorHex.Red);
   const [subject, setSubject] = useState<Subject | undefined>(Subject.Lizard);
   const [attributes, setAttributes] = useState<PerformanceAttributes>({});
-  const [status, setStatus] = useState<MintStatus>(MintStatus.None);
+  const [status, setStatus] = useState<MintStatusDisplayText>(MintStatusDisplayText.None);
   const [pageLoaded, setPageLoaded] = useState(false);
   const [showImageAttributes, setShowImageAttributes] = useState(false);
 
@@ -77,18 +78,11 @@ export const Performance = (): React.ReactNode => {
   const { setlists, setlistsLoading } = useSetlists(date);
   const { song, songLoading } = useSong(songId);
   const { track, trackLoading } = useTrack(date, parsedPosition);
-  const { performance, performanceLoading } = usePerformance(
-    date,
-    parsedPosition
-  );
-  const { metadata, metadataLoading } = useNftMetadata(
-    hfbCollectionId,
-    performance?.serial
-  );
+  const { performance, performanceLoading } = usePerformance(date, parsedPosition);
+  const { metadata, metadataLoading } = useNftMetadata(hfbCollectionId, performance?.serial);
   const { accountId, walletInterface } = useWalletInterface();
-  const { isAssociated, isAssociatedLoading, mutateIsAssociated } =
-    useIsTokenAssociated(hfbCollectionId, accountId);
-
+  const { isAssociated, isAssociatedLoading, mutateIsAssociated } = useIsTokenAssociated(hfbCollectionId, accountId);
+  
   const whiteList = isWhiteList(accountId);
 
   // // Randomize the image attributes when the page loads
@@ -170,7 +164,7 @@ export const Performance = (): React.ReactNode => {
   // Set status to Already Minted if the performance has a serial
   useEffect(() => {
     if (performance && performance.serial) {
-      setStatus(MintStatus.AlreadyMinted);
+      setStatus(MintStatusDisplayText.AlreadyMinted);
     }
   }, [performance]);
 
@@ -251,7 +245,7 @@ export const Performance = (): React.ReactNode => {
     }
   };
 
-  const updateStatus = (newStatus: MintStatus) => {
+  const updateStatus = (newStatus: MintStatusDisplayText) => {
     setStatus(newStatus);
     console.log(newStatus);
   };
@@ -261,11 +255,11 @@ export const Performance = (): React.ReactNode => {
       return;
     }
     if (performance?.serial) {
-      updateStatus(MintStatus.AlreadyMinted);
+      updateStatus(MintStatusDisplayText.AlreadyMinted);
       return;
     }
 
-    updateStatus(MintStatus.AcquiringLock);
+    updateStatus(MintStatusDisplayText.AcquiringLock);
     const { serial, txBytes } = await fetchStandardJson<PreTransferResponse>(
       `/api/mint/${accountId}/${date}/${position}`,
       {
@@ -280,19 +274,19 @@ export const Performance = (): React.ReactNode => {
       switch (serial) {
         case SerialErrorResponse.LOCK_NOT_ACQUIRED:
           error = "Lock not acquired";
-          updateStatus(MintStatus.LockNotAcquired);
+          updateStatus(MintStatusDisplayText.LockNotAcquired);
           break;
         case SerialErrorResponse.ALREADY_MINTED:
           error = "Performance already claimed";
-          updateStatus(MintStatus.AlreadyMinted);
+          updateStatus(MintStatusDisplayText.AlreadyMinted);
           break;
         case SerialErrorResponse.NO_SUPPLY:
           error = "No supply available";
-          updateStatus(MintStatus.NoSupply);
+          updateStatus(MintStatusDisplayText.NoSupply);
           break;
         default:
           error = "Unknown error";
-          updateStatus(MintStatus.LockNotAcquired);
+          updateStatus(MintStatusDisplayText.LockNotAcquired);
           break;
       }
       await fetchStandardJson(
@@ -317,7 +311,7 @@ export const Performance = (): React.ReactNode => {
       return;
     }
 
-    updateStatus(MintStatus.InitiatingTransfer);
+    updateStatus(MintStatusDisplayText.InitiatingTransfer);
     let transferSuccess = false;
     try {
       const nftId = new NftId(TokenId.fromString(hfbCollectionId), serial);
@@ -333,7 +327,7 @@ export const Performance = (): React.ReactNode => {
     }
 
     if (!transferSuccess) {
-      updateStatus(MintStatus.TransferAborted);
+      updateStatus(MintStatusDisplayText.TransferAborted);
       await fetchStandardJson(
         `/api/mint/${accountId}/${date}/${position}/${serial}/abort`,
         { method: "POST" }
@@ -341,7 +335,7 @@ export const Performance = (): React.ReactNode => {
       return;
     }
 
-    updateStatus(MintStatus.UpdatingMetadata);
+    updateStatus(MintStatusDisplayText.UpdatingMetadata);
     const metadataUpdateSuccess = await fetchStandardJson<boolean>(
       `/api/mint/${accountId}/${date}/${position}/${serial}`,
       { method: "POST" }
@@ -349,8 +343,8 @@ export const Performance = (): React.ReactNode => {
 
     updateStatus(
       metadataUpdateSuccess
-        ? MintStatus.MintComplete
-        : MintStatus.FailedToUpdateMetadata
+        ? MintStatusDisplayText.MintComplete
+        : MintStatusDisplayText.FailedToUpdateMetadata
     );
   };
 
@@ -415,11 +409,11 @@ export const Performance = (): React.ReactNode => {
       (!mintEnabled && !whiteList) ||
       !Boolean(performance) ||
       [
-        MintStatus.AcquiringLock,
-        MintStatus.AlreadyMinted,
-        MintStatus.InitiatingTransfer,
-        MintStatus.UpdatingMetadata,
-        MintStatus.MintComplete,
+        MintStatusDisplayText.AcquiringLock,
+        MintStatusDisplayText.AlreadyMinted,
+        MintStatusDisplayText.InitiatingTransfer,
+        MintStatusDisplayText.UpdatingMetadata,
+        MintStatusDisplayText.MintComplete,
       ].includes(status);
     return (
       <DolButton
@@ -428,15 +422,15 @@ export const Performance = (): React.ReactNode => {
         onClick={handleMintClick}
         disabled={disabled}
       >
-        Mint: {hfbHbarPrice} ℏ
+        Mint: {`${process.env.NEXT_PUBLIC_HFB_HBAR_PRICE || "46"}`} ℏ
       </DolButton>
     );
   };
 
   const getStatusText = (): React.ReactNode => {
     return !performanceLoading &&
-      status !== MintStatus.None &&
-      status !== MintStatus.AlreadyMinted ? (
+      status !== MintStatusDisplayText.None &&
+      status !== MintStatusDisplayText.AlreadyMinted ? (
       <div className="text-dol-yellow">{status}</div>
     ) : null;
   };
@@ -448,7 +442,7 @@ export const Performance = (): React.ReactNode => {
 
     if (!mintEnabled && !whiteList) {
       return (
-        <PageNote color="dol-red" className="text-center">
+        <PageNote color="red" className="text-center">
           Public minting is currently disabled.
         </PageNote>
       );
@@ -465,7 +459,7 @@ export const Performance = (): React.ReactNode => {
     return (
       <>
         {!mintEnabled && whiteList && (
-          <PageNote color="dol-green" className="text-center">
+          <PageNote color="green" className="text-center">
             Public minting is currently disabled, but you&apos;re on the Guest List!
           </PageNote>
         )}
@@ -484,7 +478,7 @@ export const Performance = (): React.ReactNode => {
   }
 
   const formattedSetlist = getSetlistLines(setlists, parseInt(position))
-    .map((s) => (s.isCurrentPosition ? `${boldIndicator}${s.text}` : s.text))
+    .map((s: SetlistLine) => (s.isCurrentPosition ? `${boldIndicator}${s.text}` : s.text))
     .join("\n");
 
   const showAuditLogs = false;

@@ -1,9 +1,6 @@
 import { twMerge } from "tailwind-merge";
-import {
-  getDolBorderColorClass,
-  getDolTranslucentBackgroundColorClass,
-  getLabelTextColorClass,
-} from "@erikmuir/dol-lib/common/dapp";
+import { getTwDolColor, getLabelTextColorClass } from "@erikmuir/dol-lib/dapp";
+import { TwColorClassPrefix } from "@erikmuir/dol-lib/types";
 import { BaseAttributeProps } from "./types";
 
 export type DropDownOption = {
@@ -43,8 +40,8 @@ export const DropDownAttribute = ({
       className={twMerge(
         "border rounded p-2 whitespace-nowrap text-center self-stretch",
         fullWidth ? "w-full" : "w-fit",
-        getDolBorderColorClass(attributeColor),
-        getDolTranslucentBackgroundColorClass(attributeColor)
+        attributeColor ? getTwDolColor(attributeColor, TwColorClassPrefix.Border) : "border-gray-medium",
+        attributeColor ? getTwDolColor(attributeColor, TwColorClassPrefix.Background, 25) : "bg-gray-dark/75",
       )}
     >
       {label && (

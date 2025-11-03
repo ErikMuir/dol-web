@@ -1,5 +1,5 @@
 import { twMerge } from "tailwind-merge";
-import { sanitizeText, getMonthName } from "@erikmuir/dol-lib/common/utils";
+import { sanitizeText, getMonthName } from "@erikmuir/dol-lib/utils";
 import { ItemCountPill } from "@/components/common/ItemCountPill";
 import { DateShowCount, DateType } from "./types";
 

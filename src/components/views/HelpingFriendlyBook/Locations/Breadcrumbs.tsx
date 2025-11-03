@@ -1,6 +1,6 @@
 import { usePathname, useRouter } from "next/navigation";
-import { getStateName } from "@erikmuir/dol-lib/common/dapp";
-import { sanitizeText } from "@erikmuir/dol-lib/common/utils";
+import { getStateName } from "@erikmuir/dol-lib/dapp";
+import { sanitizeText } from "@erikmuir/dol-lib/utils";
 
 export type BreadcrumbsProps = {
   country?: string;

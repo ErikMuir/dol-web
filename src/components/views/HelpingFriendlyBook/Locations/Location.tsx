@@ -1,5 +1,5 @@
 import { twMerge } from "tailwind-merge";
-import { sanitizeText } from "@erikmuir/dol-lib/common/utils";
+import { sanitizeText } from "@erikmuir/dol-lib/utils";
 import { ItemCountPill } from "@/components/common/ItemCountPill";
 import { LocationShowCount, LocationType } from "./types";
 

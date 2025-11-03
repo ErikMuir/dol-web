@@ -1,15 +1,12 @@
 import { twMerge } from "tailwind-merge";
-import { DolColorClass } from "@erikmuir/dol-lib/types";
-import {
-  getDolBackgroundColorClass,
-  getDolBorderColorClass,
-} from "@erikmuir/dol-lib/common/dapp";
+import { type DolColor, TwColorClassPrefix } from "@erikmuir/dol-lib/types";
+import { getTwDolColor } from "@erikmuir/dol-lib/dapp";
 
 export type ItemCountPillProps = {
   item: string;
   count: number;
   plural?: string;
-  dolColor?: DolColorClass;
+  dolColor?: DolColor;
   twSize?: string;
   hidden?: boolean;
   className?: string;
@@ -31,8 +28,8 @@ export const ItemCountPill = ({
   dolColor ||= getDeterminitiveDolColor(seed);
 
   const text = Number(count) === 1 ? item : plural;
-  const bgColor = getDolBackgroundColorClass(dolColor);
-  const borderColor = getDolBorderColorClass(dolColor);
+  const bgColor = getTwDolColor(dolColor, TwColorClassPrefix.Background);
+  const borderColor = getTwDolColor(dolColor, TwColorClassPrefix.Border);
   const {
     twTextSize,
     twOuterPaddingLeft,
@@ -129,17 +126,17 @@ export type SizeValues = {
   twInnerPaddingRight: string;
 };
 
-export const getDeterminitiveDolColor = (value: number): DolColorClass => {
+export const getDeterminitiveDolColor = (value: number): DolColor => {
   const mod = value % 3;
   switch (mod) {
     case 0:
-      return "dol-blue";
+      return "blue";
     case 1:
-      return "dol-green";
+      return "green";
     case 2:
-      return "dol-red";
+      return "red";
     // if we want to support yellow pills, we'll need to dynamically change the text color
     default:
-      return "dol-blue";
+      return "blue";
   }
 };

@@ -1,9 +1,9 @@
-import { DolColorClass } from "@erikmuir/dol-lib/types";
+import { DolColor } from "@erikmuir/dol-lib/types";
 
 export type BaseAttributeProps = {
   label?: string;
-  textColor?: DolColorClass;
-  attributeColor?: DolColorClass;
+  textColor?: DolColor;
+  attributeColor?: DolColor;
   fullWidth?: boolean;
   loading?: boolean;
 };

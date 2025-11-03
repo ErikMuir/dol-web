@@ -4,17 +4,9 @@ import { useEffect, useState } from "react";
 import { BiSolidError } from "react-icons/bi";
 import { FaPlusCircle } from "react-icons/fa";
 import { twMerge } from "tailwind-merge";
-import { PerformanceAttributes } from "@erikmuir/dol-lib/types";
-import {
-  getCollectionName,
-  getEraDolColorClass,
-  getDolTextColorClass,
-  extractPerformanceAttributes,
-} from "@erikmuir/dol-lib/common/dapp";
-import {
-  ipfsToHttps,
-  toFriendlyDate,
-} from "@erikmuir/dol-lib/common/utils";
+import { getEraColor, getTwDolColor, extractPerformanceAttributes } from "@erikmuir/dol-lib/dapp";
+import { PerformanceAttributes, TwColorClassPrefix } from "@erikmuir/dol-lib/types";
+import { ipfsToHttps, toFriendlyDate } from "@erikmuir/dol-lib/utils";
 import { useNftMetadata } from "@/hooks";
 import { Loading } from "@/components/common/Loading";
 
@@ -70,8 +62,8 @@ export const StashItem = ({
       );
     }
 
-    const eraColor = getEraDolColorClass(attributes.date);
-    const textColorClass = getDolTextColorClass(eraColor);
+    const eraColor = getEraColor(attributes.date);
+    const textColorClass = getTwDolColor(eraColor, TwColorClassPrefix.Text);
 
     return (
       <div className="flex items-start p-2 gap-2">
@@ -80,7 +72,7 @@ export const StashItem = ({
           alt={metadata.name}
           width={80}
           height={80}
-          className="mx-auto rounded-lg"
+          className="mx-auto rounded-lg w-auto h-auto"
         />
         <div className="grow">
           <div className="text-xl">{attributes.song}</div>
@@ -118,7 +110,7 @@ export const StashItem = ({
           "border-t border-x border-dol-blue/25"
         )}
       >
-        {getCollectionName(tokenId)} #{serial}
+        Helping Friendly Book #{serial}
       </div>
       <div
         className={twMerge(

@@ -1,10 +1,6 @@
 import { twMerge } from "tailwind-merge";
-import {
-  getDolBorderColorClass,
-  getDolTextColorClass,
-  getDolTranslucentBackgroundColorClass,
-  getLabelTextColorClass,
-} from "@erikmuir/dol-lib/common/dapp";
+import { getTwDolColor, getLabelTextColorClass } from "@erikmuir/dol-lib/dapp";
+import { TwColorClassPrefix } from "@erikmuir/dol-lib/types";
 import { AnimatedDonut } from "@/components/common/AnimatedDonut";
 import { BaseAttributeProps } from "./types";
 
@@ -16,7 +12,7 @@ export const BooleanAttribute = ({
   label,
   bool = false,
   loading,
-  textColor = "dol-light",
+  textColor = "light",
   attributeColor,
   fullWidth,
 }: BooleanAttributeProps): React.ReactNode => {
@@ -31,8 +27,8 @@ export const BooleanAttribute = ({
       className={twMerge(
         "border rounded p-2 whitespace-nowrap text-center self-stretch",
         fullWidth ? "w-full" : "w-fit",
-        getDolBorderColorClass(attributeColor),
-        getDolTranslucentBackgroundColorClass(attributeColor)
+        attributeColor ? getTwDolColor(attributeColor, TwColorClassPrefix.Border) : "border-gray-medium",
+        attributeColor ? getTwDolColor(attributeColor, TwColorClassPrefix.Background, 25) : "bg-gray-dark/75",
       )}
     >
       {label && (
@@ -48,7 +44,7 @@ export const BooleanAttribute = ({
       <div
         className={twMerge(
           "flex flex-col items-center justify-center font-mono",
-          getDolTextColorClass(textColor)
+          getTwDolColor(textColor, TwColorClassPrefix.Text),
         )}
       >
         {content}

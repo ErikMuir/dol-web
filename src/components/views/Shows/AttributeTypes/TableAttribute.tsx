@@ -1,10 +1,7 @@
 import { twMerge } from "tailwind-merge";
-import {
-  getDolBorderColorClass,
-  getDolTranslucentBackgroundColorClass,
-  getLabelTextColorClass,
-} from "@erikmuir/dol-lib/common/dapp";
+import { getTwDolColor, getLabelTextColorClass } from "@erikmuir/dol-lib/dapp";
 import { AnimatedDonut } from "@/components/common/AnimatedDonut";
+import { TwColorClassPrefix } from "@erikmuir/dol-lib/types";
 import { BaseAttributeProps } from "./types";
 
 export type TableAttributeProps = BaseAttributeProps & {
@@ -50,8 +47,8 @@ export const TableAttribute = ({
       className={twMerge(
         "max-h-96 border rounded whitespace-nowrap self-stretch",
         fullWidth ? "w-full" : "",
-        getDolBorderColorClass(attributeColor),
-        getDolTranslucentBackgroundColorClass(attributeColor)
+        attributeColor ? getTwDolColor(attributeColor, TwColorClassPrefix.Border) : "border-gray-medium",
+        attributeColor ? getTwDolColor(attributeColor, TwColorClassPrefix.Background, 25) : "bg-gray-dark/75",
       )}
     >
       {label && (
