@@ -5,7 +5,7 @@ import { twMerge } from "tailwind-merge";
 import { NftId, TokenId, TransferTransaction } from "@hashgraph/sdk";
 import {
   DolColorHex,
-  MintStatus,
+  MintStatusDisplayText,
   PerformanceAttributes,
   PreTransferResponse,
   SerialErrorResponse,
@@ -70,7 +70,7 @@ export const Performance = (): React.ReactNode => {
   const [donut, setDonut] = useState<DolColorHex | undefined>(DolColorHex.Red);
   const [subject, setSubject] = useState<Subject | undefined>(Subject.Lizard);
   const [attributes, setAttributes] = useState<PerformanceAttributes>({});
-  const [status, setStatus] = useState<MintStatus>(MintStatus.None);
+  const [status, setStatus] = useState<MintStatusDisplayText>(MintStatusDisplayText.None);
   const [pageLoaded, setPageLoaded] = useState(false);
   const [showImageAttributes, setShowImageAttributes] = useState(false);
 
@@ -164,7 +164,7 @@ export const Performance = (): React.ReactNode => {
   // Set status to Already Minted if the performance has a serial
   useEffect(() => {
     if (performance && performance.serial) {
-      setStatus(MintStatus.AlreadyMinted);
+      setStatus(MintStatusDisplayText.AlreadyMinted);
     }
   }, [performance]);
 
@@ -245,7 +245,7 @@ export const Performance = (): React.ReactNode => {
     }
   };
 
-  const updateStatus = (newStatus: MintStatus) => {
+  const updateStatus = (newStatus: MintStatusDisplayText) => {
     setStatus(newStatus);
     console.log(newStatus);
   };
@@ -255,11 +255,11 @@ export const Performance = (): React.ReactNode => {
       return;
     }
     if (performance?.serial) {
-      updateStatus(MintStatus.AlreadyMinted);
+      updateStatus(MintStatusDisplayText.AlreadyMinted);
       return;
     }
 
-    updateStatus(MintStatus.AcquiringLock);
+    updateStatus(MintStatusDisplayText.AcquiringLock);
     const { serial, txBytes } = await fetchStandardJson<PreTransferResponse>(
       `/api/mint/${accountId}/${date}/${position}`,
       {
@@ -274,19 +274,19 @@ export const Performance = (): React.ReactNode => {
       switch (serial) {
         case SerialErrorResponse.LOCK_NOT_ACQUIRED:
           error = "Lock not acquired";
-          updateStatus(MintStatus.LockNotAcquired);
+          updateStatus(MintStatusDisplayText.LockNotAcquired);
           break;
         case SerialErrorResponse.ALREADY_MINTED:
           error = "Performance already claimed";
-          updateStatus(MintStatus.AlreadyMinted);
+          updateStatus(MintStatusDisplayText.AlreadyMinted);
           break;
         case SerialErrorResponse.NO_SUPPLY:
           error = "No supply available";
-          updateStatus(MintStatus.NoSupply);
+          updateStatus(MintStatusDisplayText.NoSupply);
           break;
         default:
           error = "Unknown error";
-          updateStatus(MintStatus.LockNotAcquired);
+          updateStatus(MintStatusDisplayText.LockNotAcquired);
           break;
       }
       await fetchStandardJson(
@@ -311,7 +311,7 @@ export const Performance = (): React.ReactNode => {
       return;
     }
 
-    updateStatus(MintStatus.InitiatingTransfer);
+    updateStatus(MintStatusDisplayText.InitiatingTransfer);
     let transferSuccess = false;
     try {
       const nftId = new NftId(TokenId.fromString(hfbCollectionId), serial);
@@ -327,7 +327,7 @@ export const Performance = (): React.ReactNode => {
     }
 
     if (!transferSuccess) {
-      updateStatus(MintStatus.TransferAborted);
+      updateStatus(MintStatusDisplayText.TransferAborted);
       await fetchStandardJson(
         `/api/mint/${accountId}/${date}/${position}/${serial}/abort`,
         { method: "POST" }
@@ -335,7 +335,7 @@ export const Performance = (): React.ReactNode => {
       return;
     }
 
-    updateStatus(MintStatus.UpdatingMetadata);
+    updateStatus(MintStatusDisplayText.UpdatingMetadata);
     const metadataUpdateSuccess = await fetchStandardJson<boolean>(
       `/api/mint/${accountId}/${date}/${position}/${serial}`,
       { method: "POST" }
@@ -343,8 +343,8 @@ export const Performance = (): React.ReactNode => {
 
     updateStatus(
       metadataUpdateSuccess
-        ? MintStatus.MintComplete
-        : MintStatus.FailedToUpdateMetadata
+        ? MintStatusDisplayText.MintComplete
+        : MintStatusDisplayText.FailedToUpdateMetadata
     );
   };
 
@@ -409,11 +409,11 @@ export const Performance = (): React.ReactNode => {
       (!mintEnabled && !whiteList) ||
       !Boolean(performance) ||
       [
-        MintStatus.AcquiringLock,
-        MintStatus.AlreadyMinted,
-        MintStatus.InitiatingTransfer,
-        MintStatus.UpdatingMetadata,
-        MintStatus.MintComplete,
+        MintStatusDisplayText.AcquiringLock,
+        MintStatusDisplayText.AlreadyMinted,
+        MintStatusDisplayText.InitiatingTransfer,
+        MintStatusDisplayText.UpdatingMetadata,
+        MintStatusDisplayText.MintComplete,
       ].includes(status);
     return (
       <DolButton
@@ -429,8 +429,8 @@ export const Performance = (): React.ReactNode => {
 
   const getStatusText = (): React.ReactNode => {
     return !performanceLoading &&
-      status !== MintStatus.None &&
-      status !== MintStatus.AlreadyMinted ? (
+      status !== MintStatusDisplayText.None &&
+      status !== MintStatusDisplayText.AlreadyMinted ? (
       <div className="text-dol-yellow">{status}</div>
     ) : null;
   };

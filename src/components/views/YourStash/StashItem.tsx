@@ -4,16 +4,9 @@ import { useEffect, useState } from "react";
 import { BiSolidError } from "react-icons/bi";
 import { FaPlusCircle } from "react-icons/fa";
 import { twMerge } from "tailwind-merge";
-import { PerformanceAttributes } from "@erikmuir/dol-lib/types";
-import {
-  getEraDolColorClass,
-  DEPRECATED__getDolTextColorClass,
-  extractPerformanceAttributes,
-} from "@erikmuir/dol-lib/dapp";
-import {
-  ipfsToHttps,
-  toFriendlyDate,
-} from "@erikmuir/dol-lib/utils";
+import { getEraColor, getTwDolColor, extractPerformanceAttributes } from "@erikmuir/dol-lib/dapp";
+import { PerformanceAttributes, TwColorClassPrefix } from "@erikmuir/dol-lib/types";
+import { ipfsToHttps, toFriendlyDate } from "@erikmuir/dol-lib/utils";
 import { useNftMetadata } from "@/hooks";
 import { Loading } from "@/components/common/Loading";
 
@@ -69,8 +62,8 @@ export const StashItem = ({
       );
     }
 
-    const eraColor = getEraDolColorClass(attributes.date);
-    const textColorClass = DEPRECATED__getDolTextColorClass(eraColor);
+    const eraColor = getEraColor(attributes.date);
+    const textColorClass = getTwDolColor(eraColor, TwColorClassPrefix.Text);
 
     return (
       <div className="flex items-start p-2 gap-2">

@@ -1,21 +1,18 @@
 import { twMerge } from "tailwind-merge";
-import { DolColorClass, LyricLine } from "@erikmuir/dol-lib/types";
-import {
-  DEPRECATED__getDolTextColorClass,
-  getPseudoRandomDolColorClass,
-} from "@erikmuir/dol-lib/dapp";
+import { DolColor, LyricLine, TwColorClassPrefix } from "@erikmuir/dol-lib/types";
+import { getTwDolColor } from "@erikmuir/dol-lib/dapp";
 
 export type LyricProps = {
   lines?: LyricLine[];
-  highlightColor?: DolColorClass;
+  highlightColor?: DolColor;
 };
 
 export const Lyric = ({
   lines = [],
-  highlightColor,
+  highlightColor = "yellow",
 }: LyricProps): React.ReactElement => {
-  highlightColor ??= getPseudoRandomDolColorClass();
-  const highlightClass = DEPRECATED__getDolTextColorClass(highlightColor);
+  const highlightClass = getTwDolColor(highlightColor, TwColorClassPrefix.Text);
+
   return (
     <div className="flex flex-col items-center justify-center">
       {lines.map((segments, lineIndex) => (

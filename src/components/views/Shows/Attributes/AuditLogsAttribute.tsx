@@ -70,7 +70,7 @@ export const AuditLogsAttribute = ({
       <TableAttribute
         rows={rows}
         loading={setlistLoading || auditLogsLoading}
-        attributeColor={"dol-dark"}
+        attributeColor={"dark"}
         fullWidth
         header
       />

@@ -57,7 +57,7 @@ export const ImageAttributes = ({
         currentValue={bgColor}
         options={getDolColorOptions()}
         onChange={handleBgColorChanged}
-        attributeColor={"dol-yellow"}
+        attributeColor={"yellow"}
         disabled={minted}
       />
       <DropDownAttribute
@@ -66,7 +66,7 @@ export const ImageAttributes = ({
         currentValue={donut}
         options={getDolColorOptions()}
         onChange={handleDonutChanged}
-        attributeColor={"dol-yellow"}
+        attributeColor={"yellow"}
         nullOptionLabel="None"
         disabled={minted}
       />
@@ -76,7 +76,7 @@ export const ImageAttributes = ({
         currentValue={subject}
         options={getSubjectOptions()}
         onChange={handleSubjectChanged}
-        attributeColor={"dol-yellow"}
+        attributeColor={"yellow"}
         nullOptionLabel="None"
         disabled={minted}
       />

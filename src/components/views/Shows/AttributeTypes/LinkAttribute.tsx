@@ -2,12 +2,8 @@ import { FaLink } from "react-icons/fa";
 import Image from "next/image";
 import Link from "next/link";
 import { twMerge } from "tailwind-merge";
-import {
-  DEPRECATED__getDolBorderColorClass,
-  DEPRECATED__getDolTextColorClass,
-  DEPRECATED__getDolTranslucentBackgroundColorClass,
-  getLabelTextColorClass,
-} from "@erikmuir/dol-lib/dapp";
+import { getTwDolColor, getLabelTextColorClass } from "@erikmuir/dol-lib/dapp";
+import { TwColorClassPrefix } from "@erikmuir/dol-lib/types";
 import { AnimatedDonut } from "@/components/common/AnimatedDonut";
 import { BaseAttributeProps } from "./types";
 
@@ -19,7 +15,7 @@ export const LinkAttribute = ({
   label,
   href,
   loading,
-  textColor = "dol-light",
+  textColor = "light",
   attributeColor,
 }: LinkAttributeProps): React.ReactNode => {
   const linkStyles = "rounded-full p-[3px] hover:scale-125 duration-300";
@@ -87,7 +83,7 @@ export const LinkAttribute = ({
       <a
         target="_blank"
         href={href}
-        className={DEPRECATED__getDolTextColorClass(textColor)}
+        className={getTwDolColor(textColor, TwColorClassPrefix.Text)}
       >
         <FaLink size={24} />
       </a>
@@ -98,8 +94,8 @@ export const LinkAttribute = ({
     <div
       className={twMerge(
         "border rounded p-2 whitespace-nowrap text-center self-stretch",
-        DEPRECATED__getDolBorderColorClass(attributeColor),
-        DEPRECATED__getDolTranslucentBackgroundColorClass(attributeColor)
+        attributeColor ? getTwDolColor(attributeColor, TwColorClassPrefix.Border) : "border-gray-medium",
+        attributeColor ? getTwDolColor(attributeColor, TwColorClassPrefix.Background, 25) : "bg-gray-dark/75",
       )}
     >
       {label && (
