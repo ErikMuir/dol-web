@@ -380,3 +380,14 @@ audio {
   width: 100%;
   height: 24px;
 }
+
+:root {
+  --dol-blue: #4362f0;
+  --dol-green: #5daa43;
+  --dol-red: #ac000f;
+  --dol-yellow: #ffdb00;
+  --dol-dark: #111111;
+  --dol-light: #f4f4e4;
+
+  --color-cycle: var(--dol-blue), var(--dol-green), var(--dol-red), var(--dol-yellow);
+}

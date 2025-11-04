@@ -84,9 +84,8 @@ export const ImageAttributes = ({
         <MdAutorenew
           size={40}
           className={twMerge(
-            "ml-2 p-2 shadow-md rounded-full cursor-pointer",
-            "border border-dol-yellow",
-            "bg-dol-yellow/25 hover:bg-dol-yellow/50 duration-500"
+            "ml-2 p-[6px] shadow-md rounded-full cursor-pointer",
+            "animate-color-cycle",
           )}
           title="Randomize"
           onClick={handleRandomizeClick}

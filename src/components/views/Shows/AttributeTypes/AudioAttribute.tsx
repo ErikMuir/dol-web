@@ -47,7 +47,7 @@ export const AudioAttribute = ({
   const defaultedColor = attributeColor || "light";
   const attributeBackground = !["blue", "green", "red", "yellow"].includes(defaultedColor)
     ? getTwDolColor("light", TwColorClassPrefix.Background, 100)
-    : getTwDolColor(defaultedColor, TwColorClassPrefix.Background, 50);
+    : getTwDolColor(defaultedColor, TwColorClassPrefix.Background, 25);
   const attributeBorder = !["blue", "green", "red", "yellow"].includes(attributeColor || "")
     ? "border-gray-medium"
     : getTwDolColor(defaultedColor, TwColorClassPrefix.Border);
